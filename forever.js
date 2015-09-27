@@ -1,6 +1,6 @@
 var forever = require('forever-monitor');
 
-var child = new(forever.Monitor)('realtime-server.js', {
+var child = new(forever.Monitor)('server.js', {
     //max: 3,
     silent: false,
     options: []
