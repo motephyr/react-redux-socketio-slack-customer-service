@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RealtimeDemo</title>
+	<script type='text/javascript'>
+
+	window.realtime = {};
+	window.realtime.enabled = false;
+
+</script>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<link rel="stylesheet" type="text/css" href="/css/objects.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+
+<script src="http://0.0.0.0:5001/socket.io/socket.io.js"></script>
+
+<script type='text/javascript'>
+
+	if (typeof io != 'undefined' && io != null) {
+		window.realtime.token = '291c8816b32d71664f45c3e2278967dc';
+		window.realtime.userId = '';
+		window.realtime.socketIo = io.connect('http://0.0.0.0:5001/?_rtUserId=&_rtToken=291c8816b32d71664f45c3e2278967dc');
+	}
+
+	if (window.realtime.socketIo) {
+	
+		window.realtime.enabled = true;
+
+		window.realtime.socketIo.on('connect', function() {
+			// Give a nice round-trip ACK to our realtime server that we connected.
+    		window.realtime.socketIo.emit('realtime_user_id_connected');
+    		console.log("connect");
+  		});
+  		window.realtime.socketIo.on('disconnect', function() {
+			// Give a nice round-trip ACK to our realtime server that we connected.
+    		console.log("disconnect");
+  		});
+
+	}
+
+</script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+
+
+</head>
+<body>
+
+		<div id="upSection"></div>
+	<div id="downSection"></div>
+	<div id="leftSection"></div>
+	<div id="rightSection"></div>
+	<script src="/js/jquery.min.js"></script>
+	<script>
+		var up, upContext;
+		var down, downContext;
+		var left, leftContext;
+		var right, rightContext;
+
+		var doLayout = function(){
+			var w = $(window).width();
+			var h = $(window).height();
+			var cw = w / 3;
+			cw = Math.min(cw, h / 3);
+
+			$("#upSection,#downSection,#leftSection,#rightSection").width(cw).height(cw);
+			$("#upSection").offset({left: cw ,top: 0});
+			$("#downSection").offset({left: cw ,top: cw * 2});
+			$("#leftSection").offset({left: 0 ,top: cw});
+			$("#rightSection").offset({left: cw * 2 ,top: cw});
+		};
+		$(window).load(function(){
+			up = document.getElementById('upSection');
+			//upContext = up.getContext('2d');
+
+			down = document.getElementById('downSection');
+			//downContext = down.getContext('2d');
+
+			left = document.getElementById('leftSection');
+			//leftContext = left.getContext('2d');
+
+			right = document.getElementById('rightSection');
+			//rightContext = right.getContext('2d');
+			//alert("load");
+			//if (window.realtime.socketIo) {
+				
+				$(up).on('click', function(){
+					
+					window.realtime.socketIo.emit('move_up');
+				});
+				$(down).on('click', function(){
+					
+					window.realtime.socketIo.emit('move_down');
+				});
+				$(left).on('click', function(){
+					
+					window.realtime.socketIo.emit('move_left');
+				});
+				$(right).on('click', function(){
+					
+					window.realtime.socketIo.emit('move_right');
+				});
+			//}
+			
+			$("#upSection,#downSection,#leftSection,#rightSection").css("background", "#dbdbdb");
+
+			doLayout();
+		});
+		$(window).resize(function(){
+			doLayout();
+		});
+
+
+	</script>
+
+</body>
+</html>
