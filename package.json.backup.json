@@ -2,11 +2,9 @@
   "name": "realtime-server",
   "description": "providing real-time sychronization for ruby on rails",
   "version": "0.0.1",
-
   "scripts": {
-    "start": "pm2 start server.js",
-    "debug": "pm2-dev run server.js",
-    "kill": "pm2 kill",
+    "start": "supervisor server.js",
+    "debug": "supervisor --debug server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

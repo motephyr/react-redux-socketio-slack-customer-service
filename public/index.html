@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script>
+  document.write('<script src="//' + location.hostname + ':5001/socket.io/socket.io.js">\x3C/script>');
+  </script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/canvas-manager.js"></script>
+</head>
+
+<body>
+  <div style="float:left;">
+    <div style="height:30px;width:300px;padding:5px 0;">
+      <button id="clearBtn" style="font-size:15px;">Clear</button>
+      <p id="seconds" style="float:right;"></p>
+    </div>
+    <canvas id="origin" class="orgincanvas"></canvas>
+  </div>
+</body>
+<script>
+$(function() {
+  window.realtime = {};
+
+  document.body.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+  }, false);
+
+  var location = function(obj) {
+    var left = canvas.offsetLeft;
+    var top = canvas.offsetTop;
+    //alert(JSON.stringify(obj));
+    var clientX = obj.clientX || obj.touches['0'].clientX;
+    var clientY = obj.clientY || obj.touches['0'].clientY;
+    return {
+      x: clientX - left,
+      y: clientY - top
+    }
+  }
+
+
+  var isDrawing = false;
+  var canvas = document.getElementById('origin');
+
+  canvas.onmousedown = function(e) {
+    //alert('in canvas');
+    isDrawing = true;
+    //CM('origin').point(location(e));
+    window.realtime.socketIo.emit('down_location', location(e));
+  };
+  canvas.onmousemove = function(e) {
+    if (isDrawing) {
+      window.realtime.socketIo.emit('move_location', location(e));
+      //CM('origin').line(location(e));
+    }
+  };
+  canvas.onmouseup = function() {
+    isDrawing = false;
+    window.realtime.socketIo.emit('up_location');
+  };
+
+  canvas.ontouchstart = function(e) {
+    isDrawing = true;
+    //CM('origin').point(location(e));
+    window.realtime.socketIo.emit('down_location', location(e));
+  };
+  canvas.ontouchmove = function(e) {
+    if (isDrawing) {
+      window.realtime.socketIo.emit('move_location', location(e));
+      //CM('origin').line(location(e));
+    }
+  };
+  canvas.ontouchend = function() {
+    isDrawing = false;
+    window.realtime.socketIo.emit('up_location');
+  };
+
+  document.getElementById('clearBtn').onclick = function() {
+    window.realtime.socketIo.emit('clear');
+    //CM('origin').clear();
+  };
+
+});
+
+window.onload = function() {
+
+
+  if (typeof io != 'undefined' && io != null) {
+    window.realtime.token = '291c8816b32d71664f45c3e2278967dc';
+    window.realtime.userId = '0';
+    window.realtime.socketIo = io.connect(
+      'http://' + window.location.hostname + ':5001/?_rtUserId=' + window.realtime.userId + '&_rtToken=' + window.realtime.token
+      );
+  }
+
+  if (window.realtime.socketIo) {
+
+    window.realtime.enabled = true;
+
+    window.realtime.socketIo.on('connect', function() {
+      // Give a nice round-trip ACK to our realtime server that we connected.
+      window.realtime.socketIo.emit('realtime_user_id_connected');
+      console.log("connect");
+    });
+
+    window.realtime.socketIo.on('realtime_user_id_connected', function(message) {
+      console.log("user_id:" + message.user_id);
+    });
+
+    window.realtime.socketIo.on('disconnect', function() {
+      // Give a nice round-trip ACK to our realtime server that we connected.
+      console.log("disconnect");
+    });
+
+    window.realtime.socketIo.on('down_location', function(e) {
+      CM('origin').point(e);
+    });
+
+    window.realtime.socketIo.on('move_location', function(e) {
+      CM('origin').line(e);
+    });
+
+    window.realtime.socketIo.on('up_location', function() {});
+
+    window.realtime.socketIo.on('clear', function() {
+      CM('origin').clear();
+    });
+
+  }
+
+  CM.prop({
+    width: 500,
+    height: 500,
+    lineWidth: 15,
+    lineColor: '#333333',
+    targetZoomScale: 1,
+    backgroundImage: '/image/block-525.png'
+  });
+
+  CM.reg('origin');
+
+};
+</script>
+
+</html>
