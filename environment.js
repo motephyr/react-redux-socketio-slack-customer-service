@@ -1,20 +1,13 @@
-GLOBAL._ = require('lodash');
+_ = require('lodash');
 var helper = require('./controller/helper');
 
 module.exports = {
 
-    loadSocketIo: function loadSocketIo() {
+    loadSocketIo: function loadSocketIo(server) {
 
         GLOBAL.client_id = {};
 
-        var port = process.env.PORT || 5001;
-        if (process.env.NODE_ENV != 'production') {
-            port = 5001; // run on a different port when in non-production mode.
-        }
-
-        console.log('STARTING ON PORT: ' + port);
-
-        var io = require('socket.io').listen(Number(port));
+        var io = require('socket.io').listen(server);
 
         io.on('connection', function(socket) {
 

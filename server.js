@@ -1,12 +1,11 @@
 var Express = require('express'),
   App = Express(),
   Http = require('http');
-Http.createServer(App).listen(8080);
-
+var server = Http.createServer(App).listen(8080);
 
 var Environment = require('./environment.js');
 //var redis = environment.loadRedis();
-var Io = Environment.loadSocketIo();
+var Io = Environment.loadSocketIo(server);
 
 Environment.authorize(Io);
 

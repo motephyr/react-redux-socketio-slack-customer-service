@@ -4,9 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <script>
-  document.write('<script src="//' + location.hostname + ':5001/socket.io/socket.io.js">\x3C/script>');
-  </script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/js/jquery.min.js"></script>
   <script src="/js/canvas-manager.js"></script>
 </head>
@@ -90,9 +88,7 @@ window.onload = function() {
   if (typeof io != 'undefined' && io != null) {
     window.realtime.token = '291c8816b32d71664f45c3e2278967dc';
     window.realtime.userId = '0';
-    window.realtime.socketIo = io.connect(
-      'http://' + window.location.hostname + ':5001/?_rtUserId=' + window.realtime.userId + '&_rtToken=' + window.realtime.token
-      );
+    window.realtime.socketIo = io.connect('?_rtUserId=' + window.realtime.userId + '&_rtToken=' + window.realtime.token);
   }
 
   if (window.realtime.socketIo) {
