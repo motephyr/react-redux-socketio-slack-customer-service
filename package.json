@@ -3,9 +3,8 @@
   "description": "providing real-time sychronization for ruby on rails",
   "version": "0.0.1",
   "scripts": {
-    "start": "supervisor server.js",
-    "debug": "supervisor --debug server.js",
-    "kill": "pm2 kill",
+    "start": "supervisor --debug server.js",
+    "debug": "node-inspector server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,6 +20,5 @@
     "url": "http://github.com/mikeatlas/realtime-server.git"
   },
   "devDependencies": {
-    "debug": "^2.2.0"
   }
 }
