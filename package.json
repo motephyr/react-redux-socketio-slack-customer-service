@@ -2,6 +2,7 @@
   "name": "realtime-server",
   "description": "providing real-time sychronization for ruby on rails",
   "version": "0.0.1",
+  "main": "server.js",
   "scripts": {
     "start": "supervisor --debug server.js",
     "debug": "node-inspector server.js",
