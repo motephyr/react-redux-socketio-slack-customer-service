@@ -1,0 +1,20 @@
+{
+  "name": "solda-web",
+  "version": "1.0.0",
+  "homepage": "https://github.com/hypo/QueueBackend",
+  "authors": [
+    "David Chang <zeta11235813@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "eonasdan-bootstrap-datetimepicker": "~4.7.14"
+  }
+}

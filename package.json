@@ -4,8 +4,10 @@
   "version": "0.0.1",
   "main": "server.js",
   "scripts": {
-    "start": "supervisor --debug server.js",
+    "start": "NODE_ENV=production supervisor server.js",
     "debug": "node-inspector server.js",
+    "dev": "NODE_ENV=development supervisor --debug server.js",
+    "build:deploy": "NODE_ENV=production webpack -p --config ./client/webpack.production.config.js && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -16,10 +18,43 @@
     "redis": "0.7.3",
     "socket.io": "*"
   },
+  "devDependencies": {
+    "airbrake-js": "^0.5.2",
+    "babel-core": "^5.8.23",
+    "babel-loader": "^5.3.2",
+    "bootstrap": "^3.3.5",
+    "classnames": "^2.1.3",
+    "css-loader": "^0.18.0",
+    "es6-promise": "^3.0.2",
+    "history": "^1.11.1",
+    "imports-loader": "^0.6.4",
+    "jquery": "^2.1.4",
+    "moment": "^2.10.6",
+    "object-assign": "^4.0.1",
+    "parse": "^1.6.1",
+    "react": "^0.14.0-rc1",
+    "react-cursor": "^1.2.1",
+    "react-dnd": "^1.1.5",
+    "react-dom": "^0.14.0-rc1",
+    "react-hot-loader": "^1.3.0",
+    "react-redux": "^3.0.1",
+    "react-router": "^1.0.0-rc1",
+    "react-transmit": "^2.6.4",
+    "redux": "^3.0.2",
+    "redux-devtools": "^2.1.5",
+    "redux-logger": "^2.0.1",
+    "redux-promise": "^0.5.0",
+    "redux-thunk": "^1.0.0",
+    "rx-lite": "^3.1.2",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.12.0",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.12.0",
+    "webpack-hot-middleware": "^2.4.1",
+    "whatwg-fetch": "^0.9.0"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/mikeatlas/realtime-server.git"
-  },
-  "devDependencies": {
   }
 }
