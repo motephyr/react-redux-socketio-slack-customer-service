@@ -23,10 +23,10 @@ export default class TestContainer extends Component {
 
     return (
       <div>
-        <Counter actions={counterActions} />
         <MessageComponent actions={messageActions} />
       </div>
     );
   }
 }
 
+//        <Counter actions={counterActions} />

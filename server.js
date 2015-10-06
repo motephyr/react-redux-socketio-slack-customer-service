@@ -10,6 +10,7 @@ var Io = Environment.loadSocketIo(server);
 Environment.authorize(Io);
 
 App.use('/', Express.static(__dirname));
+App.use('/dist', Express.static(__dirname + '/client/dist'));
 
 App.use('/js', Express.static(__dirname + '/assets/javascripts'));
 App.use('/css', Express.static(__dirname + '/assets/stylesheets'));

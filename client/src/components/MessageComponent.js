@@ -13,9 +13,18 @@ export default class MessageComponent extends Component {
     message: PropTypes.object.isRequired
   }
 
-  handleChange(e) {
-    const {actions} = this.props
-    actions.input({ email:e.target.value})
+  handleChangeEmail(e) {
+    const {actions,message} = this.props
+    actions.input({ email:e.target.value, text: message.text})
+  }
+
+  handleChangeText(e) {
+    const {actions,message} = this.props
+    actions.input({ email:message.email, text: e.target.value})
+  }
+
+  handleSubmit(e) {
+    console.log(e);
   }
 
   render() {
@@ -23,7 +32,9 @@ export default class MessageComponent extends Component {
 
     return (
       <p>
-        <input onChange={::this.handleChange} value={ message.email } />{ message.email }
+        <input onChange={::this.handleChangeEmail} value={ message.email } />{message.email}
+        <input onChange={::this.handleChangeText} value={ message.text } />{message.text}
+        <button onKeyDown={::this.handleSubmit} >送出</button>
       </p>
     )
   }
