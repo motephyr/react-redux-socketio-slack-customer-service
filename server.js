@@ -1,7 +1,7 @@
 var Express = require('express'),
   App = Express(),
   Http = require('http');
-var server = Http.createServer(App).listen(5000);
+var server = Http.createServer(App).listen(3000);
 
 var Environment = require('./environment.js');
 //var redis = environment.loadRedis();
@@ -23,18 +23,18 @@ App.get('/:project', function (req, res, next) {
 
 processENV = process.env.NODE_ENV || "development"
 
-if (processENV === "development") {
-  console.log(processENV);
-  //---------------------------------------deploy
-  var Webpack = require('webpack');
-  var config = require('./client/webpack.dev.config.js');
+// if (processENV === "development") {
+//   console.log(processENV);
+//   //---------------------------------------deploy
+//   var Webpack = require('webpack');
+//   var config = require('./client/webpack.dev.config.js');
 
-  var compiler = Webpack(config);
+//   var compiler = Webpack(config);
 
-  App.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-  }));
-
-  App.use(require('webpack-hot-middleware')(compiler));
-}
+//   App.use(require('webpack-dev-middleware')(compiler, {
+//     noInfo: true,
+//     publicPath: config.output.publicPath
+//   }));
+// console.log(config.output.publicPath);
+//   App.use(require('webpack-hot-middleware')(compiler));
+// }

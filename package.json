@@ -5,10 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production supervisor server.js",
-    "debug": "node-inspector server.js",
     "dev": "NODE_ENV=development supervisor --debug server.js",
-    "build:deploy": "NODE_ENV=production webpack -p --config ./client/webpack.production.config.js && npm start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production webpack -p --config ./client/webpack.production.config.js",
+    "build:dev": "webpack-dev-server --config ./client/webpack.dev.config.js --inline --devtool eval --progress --colors --hot --content-base dist",
+    "deploy": "",
+    "debug": "node-inspector server.js",
+    "clean": "rimraf client/dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "npm run clean && npm run build && npm run dev",
+    "webpack:dev": "npm run clean && npm run build:dev && npm run dev"
   },
   "dependencies": {
     "express": "^4.13.3",
@@ -45,12 +50,11 @@
     "redux-logger": "^2.0.1",
     "redux-promise": "^0.5.0",
     "redux-thunk": "^1.0.0",
+    "rimraf": "^2.4.3",
     "rx-lite": "^3.1.2",
     "style-loader": "^0.12.3",
     "webpack": "^1.12.0",
-    "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.12.0",
-    "webpack-hot-middleware": "^2.4.1",
     "whatwg-fetch": "^0.9.0"
   },
   "repository": {

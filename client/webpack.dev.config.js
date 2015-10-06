@@ -13,21 +13,22 @@ var plugins = [
   new webpack.NoErrorsPlugin()
 ]
 
-var assets_path = "client/dist";
-var assets_slash_path = "/"+assets_path+"/";
+var assets_path = "dist";
+var assets_host = "http://localhost:8080/"+assets_path;
 
 
 var config = {
   entry: {
     item_editor: [
-      'webpack-hot-middleware/client?' + assets_slash_path,
+      'webpack-dev-server/client?' + assets_host,
+      'webpack/hot/only-dev-server',
       './client/src/item_editor.js'
     ]
   },
   output: {
     filename: 'bundle_[name].js',
     path: path.resolve(__dirname, assets_path),
-    publicPath: assets_slash_path
+    publicPath: assets_host
   },
   module: {
     loaders: [{
