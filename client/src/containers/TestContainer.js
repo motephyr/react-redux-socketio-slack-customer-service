@@ -1,6 +1,7 @@
 import { Component, PropTypes } from 'react';
 import Counter from '../components/Counter';
 import MessageComponent from '../components/MessageComponent';
+import CommentBoxComponent from '../components/CommentBoxComponent'
 
 import * as CounterActions from '../actions/counter';
 import * as MessageActions from '../actions/message';
@@ -24,6 +25,7 @@ export default class TestContainer extends Component {
     return (
       <div>
         <MessageComponent actions={messageActions} />
+        <CommentBoxComponent />
       </div>
     );
   }
