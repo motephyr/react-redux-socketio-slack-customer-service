@@ -26,11 +26,11 @@ export default class TestContainer extends Component {
     return (
       <div>
         <MessageComponent actions={messageActions} />
-        <CommentBoxComponent />
-        <FilterableProductTable />
       </div>
     );
   }
 }
 
 //        <Counter actions={counterActions} />
+        // <CommentBoxComponent />
+        // <FilterableProductTable />

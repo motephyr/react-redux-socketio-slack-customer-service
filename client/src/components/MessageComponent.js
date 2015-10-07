@@ -15,12 +15,12 @@ export default class MessageComponent extends Component {
 
   handleChangeEmail(e) {
     const {actions,message} = this.props
-    actions.input({ email:e.target.value, text: message.text})
+    actions.input({ email:e.target.value})
   }
 
   handleChangeText(e) {
     const {actions,message} = this.props
-    actions.input({ email:message.email, text: e.target.value})
+    actions.input({text: e.target.value})
   }
 
   handleSubmit(e) {

@@ -24,10 +24,8 @@ export default class CommentBoxComponent extends Component {
     })
   }
 
-  handleCommentSubmit = (comment) => {
-    var comments = this.state.data;
-    var newComments = comments.concat([comment]);
-    this.setState({data: newComments});
+  handleCommentSubmit(comment) {
+    console.log(comment);
     // TODO: submit to the server and refresh the list
   }
 
