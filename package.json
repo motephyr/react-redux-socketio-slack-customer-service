@@ -19,6 +19,7 @@
     "mkdirp": "^0.5.1",
     "pg": "*",
     "redis": "0.7.3",
+    "slack-client": "^1.4.1",
     "socket.io": "*"
   },
   "devDependencies": {
