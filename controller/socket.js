@@ -11,6 +11,7 @@ module.exports = function (socket, io) {
 
   require('./application_controller')(socket, io);
   require('./write_controller')(socket, io);
+  require('./message_controller')(socket,io);
 
 
   helper.emitUserId('0', function (x) {

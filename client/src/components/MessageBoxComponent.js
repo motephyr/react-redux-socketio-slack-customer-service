@@ -1,6 +1,8 @@
 import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
+const socket = io.connect('?_rtUserId=1&_rtToken=test')
+
 
 @connect(state => ({
   messages: state.messages
@@ -14,8 +16,16 @@ export default class MessageBoxComponent extends Component {
     messages: PropTypes.array.isRequired
   }
 
+  componentDidMount() {
+    const {actions} = this.props;
+
+    socket.on('new_message', (msg) =>
+      actions.input(msg)
+    )
+  }
+
   render() {
-    const {messages,actions} = this.props
+    const {messages, actions} = this.props
     return (
       <div>
       <MessageTextarea messages={messages} />
@@ -28,6 +38,11 @@ export default class MessageBoxComponent extends Component {
 
 
 class MessageTextarea extends Component {
+
+  handleChange(e) {
+    console.log(e);
+  }
+
   render() {
     var messages = this.props.messages
     var textareaValue = _.map(messages, (x) => `${x.name}:\n         ${x.text} \n`).join(' ')
@@ -38,7 +53,7 @@ class MessageTextarea extends Component {
       width: 400
     };
     return (
-      <textarea style={divStyle} name="description" value={textareaValue} />
+      <textarea style={divStyle} name="description" onChange={::this.handleChange} value={textareaValue} />
     )
   }
 }
@@ -48,10 +63,14 @@ class ControllerPanel extends Component {
 
   handleSubmit(e) {
     const {actions} = this.props
-    actions.input({
-      name:  React.findDOMNode(this.refs.email).value.trim(),
-      text:  React.findDOMNode(this.refs.text).value.trim()
-    })
+      // actions.input({
+      //   name:  React.findDOMNode(this.refs.email).value.trim(),
+      //   text:  React.findDOMNode(this.refs.text).value.trim()
+      // })
+    socket.emit('new_message', {
+      name: React.findDOMNode(this.refs.email).value.trim(),
+      text: React.findDOMNode(this.refs.text).value.trim()
+    });
   }
 
   render() {
