@@ -1,8 +1,8 @@
 export const INPUT_MESSAGE = 'INPUT_MESSAGE'
 
-export function input(message) {
+export function input(messages) {
   return {
     type: INPUT_MESSAGE,
-    message
+    messages
   }
 }

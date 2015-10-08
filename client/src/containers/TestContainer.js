@@ -1,11 +1,11 @@
 import { Component, PropTypes } from 'react';
 import Counter from '../components/Counter';
-import MessageComponent from '../components/MessageComponent';
+import MessageBoxComponent from '../components/MessageBoxComponent'
 import CommentBoxComponent from '../components/CommentBoxComponent'
 import FilterableProductTable from '../components/FilterableProductTable'
 
 import * as CounterActions from '../actions/counter';
-import * as MessageActions from '../actions/message';
+import * as MessageActions from '../actions/messages';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,7 +25,7 @@ export default class TestContainer extends Component {
 
     return (
       <div>
-        <MessageComponent actions={messageActions} />
+        <MessageBoxComponent actions={messageActions} />
       </div>
     );
   }

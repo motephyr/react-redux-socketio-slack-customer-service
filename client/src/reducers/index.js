@@ -1,4 +1,4 @@
 export counter from './counter';
-export message from './message';
+export messages from './messages';
 
 
