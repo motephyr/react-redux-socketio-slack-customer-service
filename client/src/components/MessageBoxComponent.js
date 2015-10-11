@@ -1,7 +1,8 @@
 import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
-const socket = io.connect('?_rtUserId=1&_rtToken=test')
+
+
 
 
 @connect(state => ({
@@ -10,14 +11,20 @@ const socket = io.connect('?_rtUserId=1&_rtToken=test')
 
 export default class MessageBoxComponent extends Component {
 
+  constructor(props, context) {
+    super(props, context)
+  }
+
   //保證物件有從外部傳來
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    messages: PropTypes.array.isRequired
+    messages: PropTypes.array.isRequired,
+    socket: PropTypes.object.isRequired
   }
 
+
   componentDidMount() {
-    const {actions} = this.props;
+    const {actions, socket} = this.props;
 
     socket.on('new_message', (msg) =>
       actions.input(msg)
@@ -25,11 +32,11 @@ export default class MessageBoxComponent extends Component {
   }
 
   render() {
-    const {messages, actions} = this.props
+    const {messages, actions, socket} = this.props
     return (
       <div>
       <MessageTextarea messages={messages} />
-      <ControllerPanel actions={actions} />
+      <ControllerPanel actions={actions} socket={socket} />
       </div>
     )
   }
@@ -62,7 +69,7 @@ class ControllerPanel extends Component {
 
 
   handleSubmit(e) {
-    const {actions} = this.props
+    const {actions, socket} = this.props
       // actions.input({
       //   name:  React.findDOMNode(this.refs.email).value.trim(),
       //   text:  React.findDOMNode(this.refs.text).value.trim()

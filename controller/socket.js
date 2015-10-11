@@ -3,6 +3,8 @@
 var helper = require('./helper');
 
 var UserIds = require('./userIds');
+var Slack = require('slack-client');
+var slack = new Slack('xoxb-12066211537-cg2QfmDSo3lbmyQ9cJs61ZZf', true, true);
 
 module.exports = function (socket, io) {
 
@@ -10,8 +12,8 @@ module.exports = function (socket, io) {
   UserIds.setSocketIdToUserId(currentSocketIoUserId, socket.id);
 
   require('./application_controller')(socket, io);
-  require('./write_controller')(socket, io);
-  require('./message_controller')(socket,io);
+  // require('./write_controller')(socket, io);
+  require('./message_controller')(socket,io,slack);
 
 
   helper.emitUserId('0', function (x) {

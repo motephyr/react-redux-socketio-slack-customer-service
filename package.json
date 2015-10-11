@@ -35,6 +35,7 @@
     "imports-loader": "^0.6.4",
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
+    "node-uuid": "^1.4.3",
     "object-assign": "^4.0.1",
     "parse": "^1.6.1",
     "react": "^0.14.0-rc1",
