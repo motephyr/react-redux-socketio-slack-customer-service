@@ -14,7 +14,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "config": "^1.16.0",
     "express": "^4.13.3",
+    "json5": "^0.4.0",
     "lodash": "*",
     "mkdirp": "^0.5.1",
     "pg": "*",

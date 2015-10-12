@@ -1,10 +1,11 @@
+var Config = require('config');
 
 
 var helper = require('./helper');
 
 var UserIds = require('./userIds');
 var Slack = require('slack-client');
-var slack = new Slack('xoxb-12066211537-cg2QfmDSo3lbmyQ9cJs61ZZf', true, true);
+var slack = new Slack(Config.get('SlackConfig').key, true, true);
 
 module.exports = function (socket, io) {
 
