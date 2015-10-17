@@ -1,12 +1,12 @@
 #!/bin/sh
 
 case "$1" in
-  webpack)
+  pack)
     npm run clean
     npm run build &
     npm run dev
     ;;
-  webpack:dev)
+  pack:dev)
     npm run clean
     npm run build:dev &
     npm run dev

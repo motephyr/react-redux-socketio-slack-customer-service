@@ -13,7 +13,7 @@ import {bindActionCreators} from 'redux';
 import uuid from 'node-uuid'
 
 @connect()
-export default class TestContainer extends Component {
+export default class MainContainer extends Component {
   static defaultProps = {
     socket: io.connect('?_rtUserId=' + uuid.v4() + '&_rtToken=test')
   }
@@ -25,10 +25,12 @@ export default class TestContainer extends Component {
   render() {
     const {dispatch, socket} = this.props;
     const counterActions = bindActionCreators(CounterActions, dispatch);
+    const messageActions = bindActionCreators(MessageActions, dispatch);
+
 
     return (
       <div>
-        <Counter actions={counterActions} />
+        <MessageBoxComponent actions={messageActions} socket={socket} />
       </div>
     );
   }

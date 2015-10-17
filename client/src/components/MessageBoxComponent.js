@@ -86,9 +86,7 @@ class ControllerPanel extends Component {
       <form onSubmit={::this.handleSubmit}>
         <input type="text" placeholder="Email" ref="email" />
         <br />
-        <input type="text"  ref="text" />
-        <br />
-        <button>送出</button>
+        <input type="text"  ref="text" /><button>送出</button>
       </form>
     )
   }

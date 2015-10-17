@@ -1,7 +1,7 @@
 var Express = require('express'),
   App = Express(),
   Http = require('http');
-var server = Http.createServer(App).listen(3000);
+var server = Http.createServer(App).listen(5000);
 
 var Environment = require('./environment.js');
 //var redis = environment.loadRedis();
@@ -9,18 +9,21 @@ var Io = Environment.loadSocketIo(server);
 
 Environment.authorize(Io);
 
-App.use('/', Express.static(__dirname));
+
 App.use('/dist', Express.static(__dirname + '/client/dist'));
 
 App.use('/js', Express.static(__dirname + '/assets/javascripts'));
 App.use('/css', Express.static(__dirname + '/assets/stylesheets'));
 App.use('/image', Express.static(__dirname + '/assets/images'));
 
-App.get('/:project', function (req, res, next) {
+App.get('/public/:project', function (req, res, next) {
   var project = req.params.project;
   res.sendFile(__dirname + '/public/' + project + '.html');
 });
 
+App.get('*', function (req, res, next){
+  res.sendFile(__dirname + '/client/index.html');
+})
 
 
 // processENV = process.env.NODE_ENV || "development"
