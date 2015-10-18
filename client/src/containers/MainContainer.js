@@ -29,27 +29,28 @@ export default class MainContainer extends Component {
     dispatch: PropTypes.func.isRequired
   }
   state = {
-    mounted: false
+    clicked: false
+  }
+  clicked(){
+    this.setState({clicked: true});
   }
 
-  componentDidMount() {
-    this.setState({ mounted: true });
-  }
+
 
   render() {
     const {dispatch, socket} = this.props;
     const counterActions = bindActionCreators(CounterActions, dispatch);
     const messageActions = bindActionCreators(MessageActions, dispatch);
-    const child = this.state.mounted ?
-      <div>
-        <MessageBoxComponent actions={messageActions} socket={socket} />
-      </div> :
-      null;
+    const child = this.state.clicked ?
+        <MessageBoxComponent key='a' actions={messageActions} socket={socket} />
+      : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
-      <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-        {child}
-      </ReactCSSTransitionGroup>
+      <div>
+        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
+          {child}
+        </ReactCSSTransitionGroup>
+      </div>
     );
   }
 }
