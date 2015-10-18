@@ -18,7 +18,7 @@ export default class Root extends Component {
     const processENV = process.env.NODE_ENV || "development"
     const {history} = this.props;
     return (
-      <div>
+      <div className="message">
         <Provider store={store} >
           <Router history={history} >
             <Route path="/" component={RouteHandler}>
@@ -37,3 +37,6 @@ export default class Root extends Component {
 }
 
 //        <Router history={history}>
+        // {processENV === 'development' && <DebugPanel top right bottom >
+        //   <DevTools store={store} monitor={LogMonitor} />
+        // </DebugPanel>}

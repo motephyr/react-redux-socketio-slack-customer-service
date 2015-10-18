@@ -2,16 +2,30 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <style>
+  /*    .message{
+      margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px; overflow: hidden; position: fixed; z-index: 16000002; width: 191px; height: 30px; right: 10px; bottom: 0px; background: transparent;
+    }*/
+
+  .example-enter {
+    opacity: 0.01;
+    transition: opacity 500ms ease-in;
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+  }
+  </style>
 </head>
 
 <body>
-    <div id="app"><div>
-    <script src="http://localhost:8080/dist/bundle_item_editor.js"></script>
-    <script src="/dist/bundle_item_editor.js"></script>
-
+  <div id="app">
+    <div>
+      <script src="http://localhost:8080/dist/bundle_item_editor.js"></script>
+      <script src="/dist/bundle_item_editor.js"></script>
 </body>
 
 </html>
