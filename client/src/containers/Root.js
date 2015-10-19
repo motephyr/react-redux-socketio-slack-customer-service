@@ -27,10 +27,6 @@ export default class Root extends Component {
             <Route path="/test" component={TestContainer} />
           </Router>
         </Provider>
-
-        {processENV === 'development' && <DebugPanel top right bottom >
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>}
       </div>
     );
   }

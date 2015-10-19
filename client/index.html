@@ -6,31 +6,196 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <style>
-  /*    .message{
-      margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px; overflow: hidden; position: fixed; z-index: 16000002; width: 191px; height: 30px; right: 10px; bottom: 0px; background: transparent;
-    }*/
-
-  .example-leave {
-    display:none;
+  .app {
+    width: 384px;
+    background-color: white;
+    border: 1px solid #000000;
   }
 
-  .example-enter {
-    opacity: 0.01;
+  .app .header {
+    /* Rectangle 1: */
+    padding: 11px 19px 0 19px;
+    background: #222222;
+    height: 52px;
   }
 
-  .example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
+  .app .header span {
+    vertical-align: bottom;
+    font-family: PingFangTC-Regular;
+    font-size: 14px;
+    color: #FFFFFF;
+    line-height: 25px;
   }
 
+  .app .header input {
+    vertical-align: bottom;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: inset 0px 1px 0px 0px #ECECEC;
+    border-radius: 5px;
+    float: right;
+    height: 30px;
+  }
+
+  .app .header .right-img {
+    float: right;
+    margin-left: 10px
+  }
+
+  .app .textArea {
+    padding: 22px 18px 0 18px;
+  }
+
+  .app .textArea .time {
+    background: #F4F4F4;
+    border-radius: 4px;
+    font-family: HelveticaNeue;
+    font-size: 10px;
+    color: #BFBFBF;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .app .textArea .message {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .app .textArea .message_time {
+    font-family: HelveticaNeue;
+    font-size: 10px;
+    color: #BFBFBF;
+    line-height: 12px;
+  }
+
+ .app .textArea .message_left {
+    float: left;
+  }
+
+  .app .textArea .message_left .message_block {
+    background: #DFF0D8;
+  }
+
+  .app .textArea .message_right {
+    float: right;
+  }
+
+  .app .textArea .message_right .message_block {
+    background: #D9EDF7;
+  }
+
+  .app .textArea .message_block {
+    /* Rectangle 15: */
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    word-break: break-all;
+    max-width: 200px;
+    font-family: HelveticaNeue;
+    font-size: 14px;
+    color: #000000;
+    line-height: 16px;
+    padding: 10px 20px;
+  }
+
+  .app .inputArea .text {
+    width:300px;
+    height:30px;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: inset 0px 1px 0px 0px #ECECEC;
+    border-radius: 5px;
+  }
+  .app .inputArea .button{
+    padding-bottom: 12px;
+
+    background-image: url("/image/submit.png");
+    background-repeat:no-repeat;
+    background-size: contain;
+    border:2px #9999FF none;
+    width: 78px;
+    height: 33px;
+  }
   </style>
 </head>
 
 <body>
-  <div id="app">
-    <div>
-      <script src="http://localhost:8080/dist/bundle_item_editor.js"></script>
-      <script src="/dist/bundle_item_editor.js"></script>
+  <div class="app">
+    <div class="header">
+      <img src="/image/head.png" />
+      <span>有問必答</span>
+      <img class="right-img" src="image/head.png" />
+      <input placeholder="輸入您的Email" />
+    </div>
+    <div class="textArea">
+      <div class="time">
+        <span>15 September 2013</span>
+      </div>
+      <div class="message">
+      <div class="message_left">
+        <div class="message_block">
+          <span>Hi man!</span>
+        </div>
+        <div class="message_time">
+          <span>15 September 2013</span>
+        </div>
+      </div>
+      </div>
+      <div class="message">
+      <div class="message_left">
+        <div class="message_block">
+          <span>Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.</span>
+        </div>
+        <div class="message_time">
+          <span>15 September 2013</span>
+        </div>
+      </div>
+      </div>
+      <div class="message">
+      <div class="message_right">
+        <div class="message_block">
+          <span>Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.</span>
+        </div>
+        <div class="message_time">
+          <span>15 September 2013</span>
+        </div>
+      </div>
+      </div>
+      <div class="message">
+      <div class="message_left">
+        <div class="message_block">
+          <span>Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.</span>
+        </div>
+        <div class="message_time">
+          <span>15 September 2013</span>
+        </div>
+      </div>
+      </div>
+      <div class="message">
+      <div class="message_right">
+        <div class="message_block">
+          <span>Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.</span>
+        </div>
+        <div class="message_time">
+          <span>15 September 2013</span>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="inputArea">
+        <input class="text" type="text"></input>
+        <input class="button" type="button" >
+    </div>
+    <div/>
 </body>
 
 </html>
