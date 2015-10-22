@@ -18,13 +18,21 @@
     background: #222222;
     height: 52px;
   }
+  .app .header .power{
+    background-image: url('/image/head.png');
+    background-size: 27px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+  }
 
   .app .header span {
-    vertical-align: bottom;
+    vertical-align: text-bottom;
     font-family: PingFangTC-Regular;
     font-size: 14px;
     color: #FFFFFF;
-    line-height: 25px;
+    line-height: 30px;
   }
 
   .app .header input {
@@ -44,6 +52,8 @@
 
   .app .textArea {
     padding: 22px 18px 0 18px;
+    height:500px;
+    overflow:auto;
   }
 
   .app .textArea .time {
@@ -121,81 +131,9 @@
 </head>
 
 <body>
-  <div class="app">
-    <div class="header">
-      <img src="/image/head.png" />
-      <span>有問必答</span>
-      <img class="right-img" src="image/head.png" />
-      <input placeholder="輸入您的Email" />
-    </div>
-    <div class="textArea">
-      <div class="time">
-        <span>15 September 2013</span>
-      </div>
-      <div class="message">
-      <div class="message_left">
-        <div class="message_block">
-          <span>Hi man!</span>
-        </div>
-        <div class="message_time">
-          <span>15 September 2013</span>
-        </div>
-      </div>
-      </div>
-      <div class="message">
-      <div class="message_left">
-        <div class="message_block">
-          <span>Duis aute irure dolor in reprehenderit in
-voluptate velit esse cillum dolore eu
-fugiat nulla pariatur.</span>
-        </div>
-        <div class="message_time">
-          <span>15 September 2013</span>
-        </div>
-      </div>
-      </div>
-      <div class="message">
-      <div class="message_right">
-        <div class="message_block">
-          <span>Duis aute irure dolor in reprehenderit in
-voluptate velit esse cillum dolore eu
-fugiat nulla pariatur.</span>
-        </div>
-        <div class="message_time">
-          <span>15 September 2013</span>
-        </div>
-      </div>
-      </div>
-      <div class="message">
-      <div class="message_left">
-        <div class="message_block">
-          <span>Duis aute irure dolor in reprehenderit in
-voluptate velit esse cillum dolore eu
-fugiat nulla pariatur.</span>
-        </div>
-        <div class="message_time">
-          <span>15 September 2013</span>
-        </div>
-      </div>
-      </div>
-      <div class="message">
-      <div class="message_right">
-        <div class="message_block">
-          <span>Duis aute irure dolor in reprehenderit in
-voluptate velit esse cillum dolore eu
-fugiat nulla pariatur.</span>
-        </div>
-        <div class="message_time">
-          <span>15 September 2013</span>
-        </div>
-      </div>
-      </div>
-    </div>
-    <div class="inputArea">
-        <input class="text" type="text"></input>
-        <input class="button" type="button" >
-    </div>
-    <div/>
+  <div id="app"><div>
+      <script src="http://localhost:8080/dist/bundle_item_editor.js"></script>
+      <script src="/dist/bundle_item_editor.js"></script>
 </body>
 
 </html>

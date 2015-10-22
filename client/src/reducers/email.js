@@ -1,24 +1,14 @@
 import _ from 'lodash'
 import * as types from '../actions/messages'
 
-const initialState = [{
-      id: 0,
-      name: '@customerService',
-      text: "hello,may i help you?",
-      time: new Date().toString()
-    }];
+const initialState = '';
 
-export default function messages(state = initialState, action) {
+export default function email(state = initialState, action) {
   //state是指先前的狀能
   //action是指action傳來的值
   switch (action.type) {
-  case types.INPUT_MESSAGE:
-    return [...state,{
-      id: state.reduce((maxId, messages) => Math.max(messages.id, maxId), -1) + 1,
-      name: action.messages.name,
-      text: action.messages.text,
-      time: new Date().toString()
-    }];
+  case types.FILL_EMAIL:
+    return action.email
 
   default:
     return state

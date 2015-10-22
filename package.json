@@ -8,9 +8,10 @@
     "dev": "NODE_ENV=development supervisor --debug server.js",
     "build": "NODE_ENV=production webpack -p --config ./client/webpack.production.config.js",
     "build:dev": "webpack-dev-server --config ./client/webpack.dev.config.js --inline --devtool eval --progress --colors --hot --content-base dist",
-    "deploy": "",
     "debug": "node-inspector server.js",
     "clean": "rimraf client/dist",
+    "deploy": "",
+    "restart": "pm2 restart server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
