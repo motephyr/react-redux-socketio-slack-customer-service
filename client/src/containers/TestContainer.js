@@ -4,7 +4,6 @@ import CommentBoxComponent from '../components/CommentBoxComponent'
 import FilterableProductTable from '../components/FilterableProductTable'
 
 import * as CounterActions from '../actions/counter';
-import * as MessageActions from '../actions/messages';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';

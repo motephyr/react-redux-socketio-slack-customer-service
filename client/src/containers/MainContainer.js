@@ -5,7 +5,7 @@ import CommentBoxComponent from '../components/CommentBoxComponent'
 import FilterableProductTable from '../components/FilterableProductTable'
 
 import * as CounterActions from '../actions/counter';
-import * as MessageActions from '../actions/messages';
+import * as MessageBoxActions from '../actions/messagebox';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -41,9 +41,9 @@ export default class MainContainer extends Component {
   render() {
     const {dispatch, socket} = this.props;
     const counterActions = bindActionCreators(CounterActions, dispatch);
-    const messageActions = bindActionCreators(MessageActions, dispatch);
+    const messageBoxActions = bindActionCreators(MessageBoxActions, dispatch);
     const child = this.state.clicked ?
-        <MessageBoxComponent key='a' actions={messageActions} socket={socket} />
+        <MessageBoxComponent key='a' actions={messageBoxActions} socket={socket} />
       : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (

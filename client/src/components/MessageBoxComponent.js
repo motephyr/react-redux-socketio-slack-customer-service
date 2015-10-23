@@ -6,8 +6,7 @@ import ReactDOM from 'react-dom'
 
 
 @connect(state => ({
-  messages: state.messages,
-  email: state.email
+  messages: state.messagebox.messages
 }))
 
 export default class MessageBoxComponent extends Component {
@@ -25,7 +24,7 @@ export default class MessageBoxComponent extends Component {
 }
 
 @connect(state => ({
-  email: state.email
+  email: state.messagebox.ui.email
 }))
 class Header extends Component {
 
@@ -51,7 +50,7 @@ class Header extends Component {
 
 
 @connect(state => ({
-  messages: state.messages
+  messages: state.messagebox.messages
 }))
 class MessageTextarea extends Component {
 
@@ -107,7 +106,7 @@ class MessageTextarea extends Component {
 
 
 @connect(state => ({
-  email: state.email
+  email: state.messagebox.ui.email
 }))
 class ControllerPanel extends Component {
 
