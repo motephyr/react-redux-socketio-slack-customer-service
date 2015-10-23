@@ -12,17 +12,6 @@ import ReactDOM from 'react-dom'
 
 export default class MessageBoxComponent extends Component {
 
-  constructor(props, context) {
-    super(props, context)
-  }
-
-  //保證物件有從外部傳來
-  static propTypes = {
-    actions: PropTypes.object.isRequired,
-    messages: PropTypes.array.isRequired,
-    socket: PropTypes.object.isRequired
-  }
-
   render() {
     const {actions, socket} = this.props
     return (
@@ -66,10 +55,6 @@ class Header extends Component {
 }))
 class MessageTextarea extends Component {
 
-  handleChange(e) {
-    console.log(e);
-  }
-
   componentDidMount() {
     const {actions, socket} = this.props;
 
@@ -90,7 +75,6 @@ class MessageTextarea extends Component {
     var nowTime = new Date().toString()
     var messageNodes = messages.map(function (message) {
       var leftOrRight;
-      console.log(message.name);
       if (message.name[0] == '@') {
         leftOrRight = 'message_left';
       } else {

@@ -13,6 +13,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import uuid from 'node-uuid'
 
+//help you create dispatch
 @connect()
 export default class MainContainer extends Component {
   // constructor(props){
