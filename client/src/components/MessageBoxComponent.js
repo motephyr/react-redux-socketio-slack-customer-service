@@ -5,35 +5,35 @@ import ReactDOM from 'react-dom'
 
 
 
-// @connect(state => ({
-//   messages: state.messagebox.messages
-// }))
+@connect(state => ({
+  messages: state.messagebox.messages
+}))
 
-// export default class MessageBoxComponent extends Component {
+export default class MessageBoxComponent extends Component {
 
-//   render() {
-//     const {actions, socket} = this.props
-//     return (
-//       <div className="app">
-//         <Header actions={actions} socket={socket} />
-//         <MessageTextarea actions={actions} socket={socket} />
-//         <ControllerPanel actions={actions} socket={socket} />
-//       </div>
-//     )
-//   }
-// }
+  render() {
+    const {actions, socket} = this.props
+    return (
+      <div className="app">
+        <Header actions={actions} />
+        <MessageTextarea actions={actions} socket={socket} />
+        <ControllerPanel actions={actions} socket={socket} />
+      </div>
+    )
+  }
+}
 
 @connect(state => ({
   email: state.messagebox.ui.email,
 }))
-export class Header extends Component {
+class Header extends Component {
 
   handleClick(e) {
     this.props.actions.change(false)
   }
 
   handleChange(e) {
-    const {actions, socket} = this.props
+    const {actions} = this.props
     actions.fill(ReactDOM.findDOMNode(this.refs.email).value.trim())
   }
 
@@ -54,7 +54,7 @@ export class Header extends Component {
 @connect(state => ({
   messages: state.messagebox.messages
 }))
-export class MessageTextarea extends Component {
+class MessageTextarea extends Component {
 
   componentDidMount() {
     const {actions, socket} = this.props;
@@ -110,7 +110,7 @@ export class MessageTextarea extends Component {
 @connect(state => ({
   email: state.messagebox.ui.email
 }))
-export class ControllerPanel extends Component {
+class ControllerPanel extends Component {
 
 
   handleClick(e) {
