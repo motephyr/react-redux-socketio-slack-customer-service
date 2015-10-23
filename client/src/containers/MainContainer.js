@@ -1,6 +1,6 @@
 import {Component, PropTypes} from 'react';
 import Counter from '../components/Counter';
-import MessageBoxComponent from '../components/MessageBoxComponent'
+import {Header, MessageTextarea, ControllerPanel} from '../components/MessageBoxComponent'
 import CommentBoxComponent from '../components/CommentBoxComponent'
 import FilterableProductTable from '../components/FilterableProductTable'
 
@@ -42,7 +42,12 @@ export default class MainContainer extends Component {
   render() {
     const { socket, is_panel_show,messageBoxActions} = this.props;
     const child = is_panel_show ?
-      <MessageBoxComponent key='a' actions={messageBoxActions} socket={socket} /> : <button key='b' onClick={::this.clicked}>線上客服</button>;
+      <div className="app">
+        <Header actions={messageBoxActions} socket={socket} />
+        <MessageTextarea actions={messageBoxActions} socket={socket} />
+        <ControllerPanel actions={messageBoxActions} socket={socket} />
+      </div>
+      : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
       <div>

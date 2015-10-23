@@ -5,28 +5,28 @@ import ReactDOM from 'react-dom'
 
 
 
-@connect(state => ({
-  messages: state.messagebox.messages
-}))
+// @connect(state => ({
+//   messages: state.messagebox.messages
+// }))
 
-export default class MessageBoxComponent extends Component {
+// export default class MessageBoxComponent extends Component {
 
-  render() {
-    const {actions, socket} = this.props
-    return (
-      <div className="app">
-        <Header actions={actions} socket={socket} />
-        <MessageTextarea actions={actions} socket={socket} />
-        <ControllerPanel actions={actions} socket={socket} />
-      </div>
-    )
-  }
-}
+//   render() {
+//     const {actions, socket} = this.props
+//     return (
+//       <div className="app">
+//         <Header actions={actions} socket={socket} />
+//         <MessageTextarea actions={actions} socket={socket} />
+//         <ControllerPanel actions={actions} socket={socket} />
+//       </div>
+//     )
+//   }
+// }
 
 @connect(state => ({
   email: state.messagebox.ui.email,
 }))
-class Header extends Component {
+export class Header extends Component {
 
   handleClick(e) {
     this.props.actions.change(false)
@@ -54,7 +54,7 @@ class Header extends Component {
 @connect(state => ({
   messages: state.messagebox.messages
 }))
-class MessageTextarea extends Component {
+export class MessageTextarea extends Component {
 
   componentDidMount() {
     const {actions, socket} = this.props;
@@ -110,7 +110,7 @@ class MessageTextarea extends Component {
 @connect(state => ({
   email: state.messagebox.ui.email
 }))
-class ControllerPanel extends Component {
+export class ControllerPanel extends Component {
 
 
   handleClick(e) {
