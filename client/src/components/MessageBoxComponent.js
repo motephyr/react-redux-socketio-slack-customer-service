@@ -24,25 +24,27 @@ export default class MessageBoxComponent extends Component {
 }
 
 @connect(state => ({
-  email: state.messagebox.ui.email
+  email: state.messagebox.ui.email,
 }))
 class Header extends Component {
 
+  handleClick(e) {
+    this.props.actions.change(false)
+  }
 
   handleChange(e) {
     const {actions, socket} = this.props
     actions.fill(ReactDOM.findDOMNode(this.refs.email).value.trim())
-
   }
 
   render() {
     const {actions, email} = this.props
     return (
       <div className="header">
-      <a className="power" herf=""></a>
+      <a className="power" onClick={::this.handleClick}></a>
       <span>Online Service</span>
       <img className="right-img" src="image/head.png" />
-      <input placeholder="輸入您的Email" ref="email" onChange={::this.handleChange} text={email} />
+      <input placeholder="輸入您的Email" ref="email" onChange={::this.handleChange} value={email} />
     </div>
     )
   }

@@ -9,7 +9,6 @@ import TestContainer from './TestContainer';
 
 const store = configureStore();
 
-
 export default class Root extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired

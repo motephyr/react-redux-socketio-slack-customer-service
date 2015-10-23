@@ -4,6 +4,7 @@ import * as types from '../actions/messagebox'
 const initialState = {
   ui: {
     email: '',
+    is_panel_show: false
   },
   messages: [{
     id: 0,
@@ -19,29 +20,38 @@ export default function messagebox(state = initialState, action) {
   switch (action.type) {
   case types.INPUT_MESSAGE:
     return {...state, messages: [...state.messages, {
-          id: state.messages.reduce((maxId, messages) => Math.max(messages.id, maxId), -1) + 1,
-          name: action.messages.name,
-          text: action.messages.text,
-          time: new Date().toString()
-        }]
-      };
+        id: state.messages.reduce((maxId, messages) => Math.max(messages.id, maxId), -1) + 1,
+        name: action.messages.name,
+        text: action.messages.text,
+        time: new Date().toString()
+      }]
+    };
 
-    case types.FILL_EMAIL:
-      return {...state, ui:{email: action.email}}
-
-    default:
-      return state
+  case types.FILL_EMAIL:
+    return {...state, ui: {...state.ui,
+          email: action.email
+      }
     }
+
+  case types.CHANGE_ISPANELSHOW:
+    return {...state, ui: {...state.ui,
+          is_panel_show: action.is_panel_show
+      }
+    }
+
+  default:
+    return state
   }
+}
 
-  // mergeInto = { a: 1}
-  // toMerge = {a : undefined, b:undefined}
-  // lodash.extend({}, mergeInto, toMerge) // => {a: undefined, b:undefined}
-  // lodash.merge({}, mergeInto, toMerge)  // => {a: 1, b:undefined}
-  // return _.merge({}, {...state}, action.message)
+// mergeInto = { a: 1}
+// toMerge = {a : undefined, b:undefined}
+// lodash.extend({}, mergeInto, toMerge) // => {a: undefined, b:undefined}
+// lodash.merge({}, mergeInto, toMerge)  // => {a: 1, b:undefined}
+// return _.merge({}, {...state}, action.message)
 
-  //[{
-  //   id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-  //   completed: false,
-  //   text: action.text
-  // }, ...state];
+//[{
+//   id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+//   completed: false,
+//   text: action.text
+// }, ...state];

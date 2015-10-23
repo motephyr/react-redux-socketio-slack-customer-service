@@ -14,7 +14,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import uuid from 'node-uuid'
 
 //help you create dispatch
-@connect()
+@connect(state => ({
+  is_panel_show: state.messagebox.ui.is_panel_show
+}), dispatch => ({
+  messageBoxActions: bindActionCreators(MessageBoxActions, dispatch)
+}))
 export default class MainContainer extends Component {
   // constructor(props){
   //   super(props);
@@ -27,24 +31,18 @@ export default class MainContainer extends Component {
   static propTypes = {
     // You can declare that a prop is a specific JS primitive. By default, these
     // are all optional.
-    dispatch: PropTypes.func.isRequired
   }
-  state = {
-    clicked: false
-  }
-  clicked(){
-    this.setState({clicked: true});
+
+  clicked() {
+    this.props.messageBoxActions.change(true)
   }
 
 
 
   render() {
-    const {dispatch, socket} = this.props;
-    const counterActions = bindActionCreators(CounterActions, dispatch);
-    const messageBoxActions = bindActionCreators(MessageBoxActions, dispatch);
-    const child = this.state.clicked ?
-        <MessageBoxComponent key='a' actions={messageBoxActions} socket={socket} />
-      : <button key='b' onClick={::this.clicked}>線上客服</button>;
+    const { socket, is_panel_show,messageBoxActions} = this.props;
+    const child = is_panel_show ?
+      <MessageBoxComponent key='a' actions={messageBoxActions} socket={socket} /> : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
       <div>

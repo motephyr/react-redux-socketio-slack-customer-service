@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <style>
+  button {
+    background-color: #f2f2f2;
+  }
+
   .app {
     width: 384px;
     background-color: white;
@@ -126,6 +130,19 @@
     border:2px #9999FF none;
     width: 78px;
     height: 33px;
+  }
+
+  .example-leave {
+    display:none;
+  }
+
+  .example-enter {
+    opacity: 0.01;
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
   }
   </style>
 </head>

@@ -18,3 +18,13 @@ export function fill(email) {
   }
 }
 
+
+
+export const CHANGE_ISPANELSHOW = 'CHANGE_ISPANELSHOW'
+
+export function change(is_panel_show) {
+  return {
+    type: CHANGE_ISPANELSHOW,
+    is_panel_show
+  }
+}
