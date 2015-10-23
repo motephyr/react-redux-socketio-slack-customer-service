@@ -15,9 +15,9 @@ export default class MessageBoxComponent extends Component {
     const {actions, socket} = this.props
     return (
       <div className="app">
-        <Header actions={actions} />
+        <MessageHeader actions={actions} />
         <MessageTextarea actions={actions} socket={socket} />
-        <ControllerPanel actions={actions} socket={socket} />
+        <MessageInput actions={actions} socket={socket} />
       </div>
     )
   }
@@ -26,7 +26,7 @@ export default class MessageBoxComponent extends Component {
 @connect(state => ({
   email: state.messagebox.ui.email,
 }))
-class Header extends Component {
+class MessageHeader extends Component {
 
   handleClick(e) {
     this.props.actions.change(false)
@@ -110,7 +110,7 @@ class MessageTextarea extends Component {
 @connect(state => ({
   email: state.messagebox.ui.email
 }))
-class ControllerPanel extends Component {
+class MessageInput extends Component {
 
 
   handleClick(e) {
