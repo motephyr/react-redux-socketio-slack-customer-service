@@ -1,10 +1,15 @@
+var Config = require('config');
+var Slack = require('slack-client');
+var slack = new Slack(Config.get('SlackConfig').key, true, true);
+
 module.exports = {
 
   loadSocketIo: function loadSocketIo(server) {
 
     var io = require('socket.io').listen(server);
-    io.on('connection', function (socket) {
-      require('./controller/socket.js')(socket,io);
+    var slack_login = require('./controller/message_controller')(io,slack);
+    io.on('connection', function (socket,slack) {
+      require('./controller/socket.js')(socket,io,slack_login);
     });
 
     return io;

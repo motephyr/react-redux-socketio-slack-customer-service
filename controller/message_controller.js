@@ -1,7 +1,7 @@
 var helper = require('./helper');
 
 
-module.exports = function (socket, io,slack) {
+module.exports = function (io,slack) {
   slack.on('open', function () {
     open_slack();
   });
@@ -42,23 +42,8 @@ module.exports = function (socket, io,slack) {
   })
   slack.login()
 
-  server_control_action('new_message');
+  return slack;
 
-
-  function server_control_action(action) {
-    socket.on(action, function (msg) {
-      emit_to_customerservice_and_self(action, msg);
-    });
-  }
-
-  function emit_to_customerservice_and_self(action, msg) {
-    var channel = slack.getChannelGroupOrDMByID('C0C1MCEMA');
-    channel.send('收到: ' + msg.name + '傳來的訊息: ' + msg.text);
-
-    helper.emitUserId('1', function (x) {
-      io.to(x).emit(action, msg);
-    });
-  }
 
   function open_slack() {
     var channel, channels, group, groups, id, messages, unreads;
