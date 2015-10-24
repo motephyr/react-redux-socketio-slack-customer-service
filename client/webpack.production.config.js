@@ -14,8 +14,8 @@ var plugins = [
 
 var config = {
   entry: {
-    item_editor: [
-      './client/src/item_editor.js'
+    app: [
+      './client/src/app.js'
     ]
   },
   output: {

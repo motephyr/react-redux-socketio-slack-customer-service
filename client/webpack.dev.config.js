@@ -19,10 +19,10 @@ var assets_host = "http://localhost:8080/"+assets_path;
 
 var config = {
   entry: {
-    item_editor: [
+    app: [
       'webpack-dev-server/client?' + assets_host,
       'webpack/hot/only-dev-server',
-      './client/src/item_editor.js'
+      './client/src/app.js'
     ]
   },
   output: {
