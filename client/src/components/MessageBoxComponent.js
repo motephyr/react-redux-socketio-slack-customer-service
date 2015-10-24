@@ -46,6 +46,14 @@ class MessageHeader extends Component {
   componentDidMount() {
     if (Cookie.get('email_value')) {
       this.props.actions.change_email_column(true)
+      socket.emit('new_email_on_suid', {
+        email: Cookie.get('email_value')
+      });
+    }
+  }
+  componentDidUpdate() {
+    if(this.refs.email){
+      ReactDOM.findDOMNode(this.refs.email).focus();
     }
   }
 

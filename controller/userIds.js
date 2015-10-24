@@ -17,13 +17,13 @@ var userIds = (function () {
     if (clientid == 0) {
       return 0;
     }
-    var id, nextUserId = 1;
-    do {
-      id = nextUserId;
-      nextUserId += 1;
-    } while (!claim(id));
-
-    return id;
+    // var id, nextUserId = 1;
+    // do {
+    //   id = nextUserId;
+    //   nextUserId += 1;
+    // } while (!claim(clientid));
+    claim(clientid)
+    return clientid;
   };
 
   //取得id的List
@@ -47,6 +47,13 @@ var userIds = (function () {
     if (!ids[userId]) {
       ids[userId] = [];
     }
+
+    //把socketId不一樣的取出來
+    ids[userId] = _.select(ids[userId], function (el) {
+      return el !== socketId;
+    })
+
+    //塞個新的
     ids[userId].push(socketId);
   };
 
