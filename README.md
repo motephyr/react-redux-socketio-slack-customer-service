@@ -9,6 +9,25 @@
 
 然後當用戶寫了自已的識別Email,就可以綁定Email和id來傳訊息給它。
 
+#Installation
+npm install
+
+#Usage Script
+
+action                              |command
+------------------------------------|-------
+開production的server                |npm start
+開development的server               |npm run dev
+build production的client (產生檔案)  |npm run build
+開development的client (不產生檔案)   |npm  run build:dev
+server debug mode                   |npm run debug
+砍掉client                          |npm run clean
+pm2佈署                             |npm run deploy
+pm2重開                             |npm run restart
+測試                                |npm test
+砍掉client build production的client 並開development的server         |./serv pack
+砍掉client 開development的client 並開development的server            |./serv pack:dev
+
 # react部分開發筆記
 ## 拆分用户界面为一个组件树
 
@@ -32,21 +51,6 @@ MessageBoxComponent
 ## 添加反向数据流
 用redux來處理
 
-#Todo
-set Cookie
 
 
-#script:
-action                              |command
-------------------------------------|-------
-開production的server                |npm start
-開development的server               |npm dev
-build production的client (產生檔案) |npm build
-開development的client (不產生檔案)  |npm build:dev
-佈署                                |npm deploy
-server debug mode                   |npm debug
-砍掉client                          |npm clean
-測試                                |npm test
-砍掉client build production的client 並開development的server |npm webpack
-砍掉client 開development的client 並開development的server    |npm webpack:dev
 
