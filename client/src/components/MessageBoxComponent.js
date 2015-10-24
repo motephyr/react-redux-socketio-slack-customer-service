@@ -163,11 +163,17 @@ class MessageInput extends Component {
     });
   }
 
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleClick(e);
+    }
+  }
+
   render() {
     const {actions} = this.props
     return (
       <div className="inputArea">
-        <input className="text" type="text" ref="text" />
+        <input className="text" type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
         <input className="button" type="button" onClick={::this.handleClick} />
     </div>
     )
