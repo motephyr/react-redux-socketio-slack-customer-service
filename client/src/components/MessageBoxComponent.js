@@ -2,6 +2,14 @@ import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
 import ReactDOM from 'react-dom'
+import Cookie from 'cookies-js'
+import uuid from 'node-uuid'
+
+var suid = Cookie.get('uuid');
+if (!suid) {
+  suid = Cookie.set('uuid', uuid.v4())
+}
+const socket = io.connect('?_rtUserId=' + suid + '&_rtToken=test')
 
 
 
@@ -11,40 +19,67 @@ import ReactDOM from 'react-dom'
 
 export default class MessageBoxComponent extends Component {
 
+
+
+
   render() {
-    const {actions, socket} = this.props
+    const {actions} = this.props
     return (
       <div className="app">
         <MessageHeader actions={actions} />
-        <MessageTextarea actions={actions} socket={socket} />
-        <MessageInput actions={actions} socket={socket} />
+        <MessageTextarea actions={actions}/>
+        <MessageInput actions={actions} />
       </div>
     )
   }
 }
 
 @connect(state => ({
-  email: state.messagebox.ui.email,
+  is_email_column_show: state.messagebox.ui.is_email_column_show
 }))
 class MessageHeader extends Component {
 
   handleClick(e) {
-    this.props.actions.change(false)
+    this.props.actions.change_panel(false)
   }
 
-  handleChange(e) {
-    const {actions} = this.props
-    actions.fill(ReactDOM.findDOMNode(this.refs.email).value.trim())
+  componentDidMount() {
+    if (Cookie.get('email_value')) {
+      this.props.actions.change_email_column(true)
+    }
+  }
+
+  handleEmailClick(e) {
+    this.props.actions.change_email_column(false)
+  }
+
+  handleKeyPress(e) {
+
+    if (e.key === 'Enter') {
+      Cookie.set('email_value', ReactDOM.findDOMNode(this.refs.email).value.trim());
+      this.props.actions.change_email_column(true)
+      //此時綁定Email和它的userid
+      socket.emit('new_email_on_suid', {
+        email: Cookie.get('email_value')
+      });
+    }
   }
 
   render() {
-    const {actions, email} = this.props
+    const {actions, is_email_column_show} = this.props
+    var email_column;
+    if (is_email_column_show) {
+      email_column = <span onClick={::this.handleEmailClick}  style={{float:'right'}}>{Cookie.get('email_value')}</span>
+    } else {
+      email_column = <input placeholder="輸入您的Email" ref="email" onKeyPress={::this.handleKeyPress} defaultValue={Cookie.get('email_value')}/>
+    }
+
     return (
       <div className="header">
       <a className="power" onClick={::this.handleClick}></a>
       <span>Online Service</span>
       <img className="right-img" src="image/head.png" />
-      <input placeholder="輸入您的Email" ref="email" onChange={::this.handleChange} value={email} />
+      {email_column}
     </div>
     )
   }
@@ -57,7 +92,7 @@ class MessageHeader extends Component {
 class MessageTextarea extends Component {
 
   componentDidMount() {
-    const {actions, socket} = this.props;
+    const {actions} = this.props;
 
     socket.on('new_message', (msg) => {
       actions.input(msg)
@@ -107,17 +142,15 @@ class MessageTextarea extends Component {
 
 
 
-@connect(state => ({
-  email: state.messagebox.ui.email
-}))
+@connect(state => ({}))
 class MessageInput extends Component {
 
 
   handleClick(e) {
-    const {actions, socket, email} = this.props
+    const {actions, email} = this.props
 
     socket.emit('new_message', {
-      name: email,
+      name: Cookie.get('email_value'),
       text: ReactDOM.findDOMNode(this.refs.text).value.trim()
     });
   }

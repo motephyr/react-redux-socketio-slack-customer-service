@@ -3,8 +3,8 @@ import * as types from '../actions/messagebox'
 
 const initialState = {
   ui: {
-    email: '',
-    is_panel_show: false
+    is_panel_show: false,
+    is_email_column_show: false
   },
   messages: [{
     id: 0,
@@ -27,15 +27,15 @@ export default function messagebox(state = initialState, action) {
       }]
     };
 
-  case types.FILL_EMAIL:
+  case types.CHANGEPANEL_ISSHOW:
     return {...state, ui: {...state.ui,
-          email: action.email
+          is_panel_show: action.is_show
       }
     }
 
-  case types.CHANGE_ISPANELSHOW:
+  case types.CHANGEEMAILCOLUMN_ISSHOW:
     return {...state, ui: {...state.ui,
-          is_panel_show: action.is_panel_show
+          is_email_column_show: action.is_show
       }
     }
 

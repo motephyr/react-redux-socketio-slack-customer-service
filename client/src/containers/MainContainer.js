@@ -11,8 +11,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import uuid from 'node-uuid'
-
 //help you create dispatch
 @connect(state => ({
   is_panel_show: state.messagebox.ui.is_panel_show
@@ -25,7 +23,7 @@ export default class MainContainer extends Component {
   //   // Manually bind this method to the component instance...
   // }
   static defaultProps = {
-    socket: io.connect('?_rtUserId=' + uuid.v4() + '&_rtToken=test')
+    // socket: io.connect('?_rtUserId=' + uuid.v4() + '&_rtToken=test')
   }
 
   static propTypes = {
@@ -34,15 +32,15 @@ export default class MainContainer extends Component {
   }
 
   clicked() {
-    this.props.messageBoxActions.change(true)
+    this.props.messageBoxActions.change_panel(true)
   }
 
 
 
   render() {
-    const { socket, is_panel_show,messageBoxActions} = this.props;
+    const { is_panel_show,messageBoxActions} = this.props;
     const child = is_panel_show ?
-      <MessageBoxComponent key='a' actions={messageBoxActions} socket={socket} /> : <button key='b' onClick={::this.clicked}>線上客服</button>;
+      <MessageBoxComponent key='a' actions={messageBoxActions} /> : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
       <div>

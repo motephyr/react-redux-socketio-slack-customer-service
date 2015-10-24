@@ -9,22 +9,20 @@ export function input(messages) {
 }
 
 
-export const FILL_EMAIL = 'FILL_EMAIL'
+export const CHANGEPANEL_ISSHOW = 'CHANGEPANEL_ISSHOW'
 
-export function fill(email) {
+export function change_panel(is_show) {
   return {
-    type: FILL_EMAIL,
-    email
+    type: CHANGEPANEL_ISSHOW,
+    is_show
   }
 }
 
+export const CHANGEEMAILCOLUMN_ISSHOW = 'CHANGEEMAILCOLUMN_ISSHOW'
 
-
-export const CHANGE_ISPANELSHOW = 'CHANGE_ISPANELSHOW'
-
-export function change(is_panel_show) {
+export function change_email_column(is_show) {
   return {
-    type: CHANGE_ISPANELSHOW,
-    is_panel_show
+    type: CHANGEEMAILCOLUMN_ISSHOW,
+    is_show
   }
 }
