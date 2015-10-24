@@ -1,20 +1,24 @@
-  button {
+  .customer_online_message button {
     background-color: #f2f2f2;
   }
 
-  .app {
-    width: 384px;
+  .customer_online_message{
+
+  }
+
+  .customer_online_message .app {
+    width: 356px;
     background-color: white;
     border: 1px solid #000000;
   }
 
-  .app .header {
+  .customer_online_message .app .header {
     /* Rectangle 1: */
     padding: 11px 19px 0 19px;
     background: #222222;
-    height: 52px;
+    height: 39px;
   }
-  .app .header .power{
+  .customer_online_message .app .header .power{
     background-image: url('/image/head.png');
     background-size: 27px;
     background-repeat: no-repeat;
@@ -23,36 +27,38 @@
     height: 27px;
   }
 
-  .app .header span {
+  .customer_online_message .app .header span {
     vertical-align: text-bottom;
     font-family: PingFangTC-Regular;
     font-size: 14px;
+    margin-left: 8px;
     color: #FFFFFF;
-    line-height: 30px;
+    line-height: 31px;
   }
 
-  .app .header input {
+  .customer_online_message .app .header input {
     vertical-align: bottom;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-shadow: inset 0px 1px 0px 0px #ECECEC;
     border-radius: 5px;
     float: right;
-    height: 30px;
+    font-size: 14px;
+    height: 25px;
   }
 
-  .app .header .right-img {
+  .customer_online_message .app .header .right-img {
     float: right;
     margin-left: 10px
   }
 
-  .app .textArea {
+  .customer_online_message .app .textArea {
     padding: 22px 18px 0 18px;
     height:500px;
     overflow:auto;
   }
 
-  .app .textArea .time {
+  .customer_online_message .app .textArea .time {
     background: #F4F4F4;
     border-radius: 4px;
     font-family: HelveticaNeue;
@@ -63,36 +69,36 @@
     text-align: center;
     margin-bottom: 22px;
   }
-  .app .textArea .message {
+  .customer_online_message .app .textArea .message {
     width: 100%;
     display: inline-block;
     margin-bottom: 5px;
   }
 
-  .app .textArea .message_time {
+  .customer_online_message .app .textArea .message_time {
     font-family: HelveticaNeue;
     font-size: 10px;
     color: #BFBFBF;
     line-height: 12px;
   }
 
- .app .textArea .message_left {
+  .customer_online_message .app .textArea .message_left {
     float: left;
   }
 
-  .app .textArea .message_left .message_block {
+  .customer_online_message .app .textArea .message_left .message_block {
     background: #DFF0D8;
   }
 
-  .app .textArea .message_right {
+  .customer_online_message .app .textArea .message_right {
     float: right;
   }
 
-  .app .textArea .message_right .message_block {
+  .customer_online_message .app .textArea .message_right .message_block {
     background: #D9EDF7;
   }
 
-  .app .textArea .message_block {
+  .customer_online_message .app .textArea .message_block {
     /* Rectangle 15: */
     border: 1px solid #FFFFFF;
     border-radius: 10px;
@@ -105,15 +111,15 @@
     padding: 10px 20px;
   }
 
-  .app .inputArea .text {
-    width:300px;
+  .customer_online_message .app .inputArea .text {
+    width:274px;
     height:30px;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-shadow: inset 0px 1px 0px 0px #ECECEC;
     border-radius: 5px;
   }
-  .app .inputArea .button{
+  .customer_online_message .app .inputArea .button{
     padding-bottom: 12px;
 
     background-image: url("/image/submit.png");

@@ -17,19 +17,16 @@ export default class Root extends Component {
     const processENV = process.env.NODE_ENV || "development"
     const {history} = this.props;
     return (
-      <div>
+      <div className="customer_online_message">
         <Provider store={store} >
           <Router history={history} >
-            <Route path="/" component={RouteHandler}>
+            <Route path="/client/index" component={RouteHandler}>
               <IndexRoute component={MainContainer}/>
             </Route>
             <Route path="/test" component={TestContainer} />
           </Router>
         </Provider>
 
-        {processENV === 'development' && <DebugPanel top right bottom >
-        <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>}
       </div>
     );
   }

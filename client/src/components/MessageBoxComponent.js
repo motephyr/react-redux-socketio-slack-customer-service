@@ -85,8 +85,8 @@ class MessageHeader extends Component {
     return (
       <div className="header">
       <a className="power" onClick={::this.handleClick}></a>
-      <span>Online Service</span>
-      <img className="right-img" src="image/head.png" />
+      <span onClick={::this.handleClick}>Online Service</span>
+      <img className="right-img" src="/image/head.png" />
       {email_column}
     </div>
     )

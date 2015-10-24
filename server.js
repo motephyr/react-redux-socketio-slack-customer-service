@@ -21,6 +21,11 @@ App.get('/public/:project', function (req, res, next) {
   res.sendFile(__dirname + '/public/' + project + '.html');
 });
 
+App.get('/client/:project', function (req, res, next) {
+  var project = req.params.project;
+  res.sendFile(__dirname + '/client/' + project + '.html');
+});
+
 App.get('*', function (req, res, next){
   res.sendFile(__dirname + '/client/index.html');
 })

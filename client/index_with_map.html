@@ -44,6 +44,7 @@
   ga('send', 'pageview');
 
 </script>
+
 <div class="navbar transparent navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -283,30 +284,7 @@
     }
   });
 </script>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-  <style>
-  .message{
-      margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px; overflow: hidden; position: fixed; z-index: 16000002; width: 250px; right: 10px; bottom: 0px; background: transparent;
-  }
-
-  .example-leave {
-    display:none;
-  }
-
-  .example-enter {
-    opacity: 0.01;
-  }
-
-  .example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-  }
-
-  </style>
-  <div id="app">
-    <div>
-      <script src="http://localhost:8080/dist/bundle_item_editor.js"></script>
-      <script src="/dist/bundle_item_editor.js"></script>
+<iframe src="http://localhost:5000/client/index" style="z-index: 16000002;position: fixed; right: 0px; bottom: 0px;margin: 0px;padding: 0px; border: 0px;background: transparent;"></iframe>
 </body>
 </body>
 </html>
