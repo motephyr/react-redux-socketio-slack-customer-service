@@ -19,9 +19,10 @@ module.exports = function (io,slack) {
       if (text.substring(0, 13) === '<@U0C1Y67FT>:') {
         response = text.substring(13, text.length).split(' ')
         channel.send('收到: ' + response);
-
+        var customerName = response[0]
+        console.log(customerName);
         //在這邊回給某人
-        helper.emitUserId('1', function (x) {
+        helper.emitUserId(customerName, function (x) {
           io.to(x).emit('new_message', {name: userName ,text: response[1]});
         });
 

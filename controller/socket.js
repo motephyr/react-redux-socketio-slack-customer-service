@@ -10,6 +10,11 @@ module.exports = function (socket, io,slack_login) {
   require('./application_controller')(socket, io);
   // require('./write_controller')(socket, io);
 
+  socket.on('new_email_on_suid', function(obj){
+    UserIds.setSocketIdToUserId(obj.email, socket.id);
+  });
+
+
   server_control_action('new_message');
 
 
@@ -23,7 +28,7 @@ module.exports = function (socket, io,slack_login) {
     var channel = slack_login.getChannelGroupOrDMByID('C0C1MCEMA');
     channel.send('收到: ' + msg.name + '傳來的訊息: ' + msg.text);
 
-    helper.emitUserId('1', function (x) {
+    helper.emitUserId(msg.name, function (x) {
       io.to(x).emit(action, msg);
     });
   }
