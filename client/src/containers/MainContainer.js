@@ -13,7 +13,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //help you create dispatch
 @connect(state => ({
-  is_panel_show: state.messagebox.ui.is_panel_show
+  is_panel_show: state.messagebox.ui.is_panel_show,
+  is_email_column_show: state.messagebox.ui.is_email_column_show,
+  messages: state.messagebox.messages
 }), dispatch => ({
   messageBoxActions: bindActionCreators(MessageBoxActions, dispatch)
 }))
@@ -38,9 +40,9 @@ export default class MainContainer extends Component {
 
 
   render() {
-    const { is_panel_show,messageBoxActions} = this.props;
+    const { is_panel_show,messageBoxActions,is_email_column_show,messages} = this.props;
     const child = is_panel_show ?
-      <MessageBoxComponent key='a' actions={messageBoxActions} /> : <button key='b' onClick={::this.clicked}>線上客服</button>;
+      <MessageBoxComponent key='a' actions={messageBoxActions} messages={messages} is_email_column_show={is_email_column_show}/> : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
       <div>

@@ -12,31 +12,20 @@ if (!suid) {
 const socket = io.connect('?_rtUserId=' + suid + '&_rtToken=test')
 
 
-
-@connect(state => ({
-  messages: state.messagebox.messages
-}))
-
 export default class MessageBoxComponent extends Component {
-
-
-
-
   render() {
-    const {actions} = this.props
+    const {actions,is_email_column_show,messages} = this.props
     return (
       <div className="app">
-        <MessageHeader actions={actions} />
-        <MessageTextarea actions={actions}/>
+        <MessageHeader actions={actions} is_email_column_show={is_email_column_show} />
+        <MessageTextarea actions={actions} messages={messages}/>
         <MessageInput actions={actions} />
       </div>
     )
   }
 }
 
-@connect(state => ({
-  is_email_column_show: state.messagebox.ui.is_email_column_show
-}))
+
 class MessageHeader extends Component {
 
   handleClick(e) {
@@ -94,9 +83,6 @@ class MessageHeader extends Component {
 }
 
 
-@connect(state => ({
-  messages: state.messagebox.messages
-}))
 class MessageTextarea extends Component {
 
   componentDidMount() {
@@ -150,12 +136,11 @@ class MessageTextarea extends Component {
 
 
 
-@connect(state => ({}))
 class MessageInput extends Component {
 
 
   handleClick(e) {
-    const {actions, email} = this.props
+    const {actions} = this.props
 
     socket.emit('new_message', {
       name: Cookie.get('email_value'),
