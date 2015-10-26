@@ -4,6 +4,7 @@ import _ from 'lodash'
 import ReactDOM from 'react-dom'
 import Cookie from 'cookies-js'
 import uuid from 'node-uuid'
+import io from 'socket.io-client'
 
 var suid = Cookie.get('uuid');
 if (!suid) {
@@ -30,6 +31,7 @@ class MessageHeader extends Component {
 
   handleClick(e) {
     this.props.actions.change_panel(false)
+    parent._changeIframeSize(60,22)
   }
 
   componentDidMount() {

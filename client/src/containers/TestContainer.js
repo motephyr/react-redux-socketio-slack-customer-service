@@ -13,7 +13,6 @@ import uuid from 'node-uuid'
 @connect()
 export default class TestContainer extends Component {
   static defaultProps = {
-    socket: io.connect('?_rtUserId=' + uuid.v4() + '&_rtToken=test')
   }
 
   static propTypes = {

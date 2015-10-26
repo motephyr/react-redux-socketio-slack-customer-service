@@ -23,7 +23,7 @@ App.get('/public/:project', function (req, res, next) {
 
 App.get('/client/:project', function (req, res, next) {
   var project = req.params.project;
-  res.sendFile(__dirname + '/client/' + project + '.html');
+  res.sendFile(__dirname + '/client/' + project);
 });
 
 App.get('*', function (req, res, next){

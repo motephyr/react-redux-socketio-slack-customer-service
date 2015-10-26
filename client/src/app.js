@@ -1,3 +1,4 @@
+require('../css/app.css');
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -24,7 +25,7 @@ export default class Root extends Component {
       <div className="customer_online_message">
         <Provider store={store} >
           <Router history={history} >
-            <Route path="/client/index" component={RouteHandler}>
+            <Route path="/client/index.html" component={RouteHandler}>
               <IndexRoute component={MainContainer}/>
             </Route>
             <Route path="/test" component={TestContainer} />
@@ -41,5 +42,5 @@ export default class Root extends Component {
 
 ReactDOM.render(
   <Root />,
-  document.getElementById('app')
+  document.body
 );
