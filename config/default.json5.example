@@ -1,0 +1,5 @@
+{
+  SlackConfig: {
+    key: 'YOUR-SLACK-KEY'
+  }
+}
