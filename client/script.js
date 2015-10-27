@@ -24,7 +24,7 @@ window.addEventListener("load", function _onload(event){
     window.removeEventListener("load", _onload, false);
     var dom = document.createElement('iframe');
     dom.id = "iframe";
-    dom.src = "http://localhost:5000/client/index.html";
+    dom.src = "http://52.68.126.89/client/index.html";
     dom.style.cssText = "z-index: 16000002;position: fixed; right: 0px; bottom: 0px;margin: 0px;padding: 0px; border: 0px;background: transparent;";
     dom.style['zIndex'] = _getMaxZindex() + 1;
     dom.width = 60;

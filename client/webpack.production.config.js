@@ -20,7 +20,7 @@ var config = {
   },
   output: {
     filename: 'bundle_[name].js',
-    path: path.resolve(__dirname, '')
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     loaders: [{

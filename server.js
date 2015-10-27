@@ -10,11 +10,11 @@ var Io = Environment.loadSocketIo(server);
 Environment.authorize(Io);
 
 
-App.use('/dist', Express.static(__dirname + '/client/dist'));
+App.use('/client/dist', Express.static(__dirname + '/client/dist'));
 
-App.use('/js', Express.static(__dirname + '/assets/javascripts'));
-App.use('/css', Express.static(__dirname + '/assets/stylesheets'));
-App.use('/image', Express.static(__dirname + '/assets/images'));
+App.use('/client/js', Express.static(__dirname + '/assets/javascripts'));
+App.use('/client/css', Express.static(__dirname + '/assets/stylesheets'));
+App.use('/client/image', Express.static(__dirname + '/assets/images'));
 
 App.get('/public/:project', function (req, res, next) {
   var project = req.params.project;

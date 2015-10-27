@@ -23,7 +23,7 @@
     height: 39px;
   }
   .customer_online_message .app .header .power{
-    background-image: url('/image/head.png');
+    background-image: url('/client/image/head.png');
     background-size: 27px;
     background-repeat: no-repeat;
     display: inline-block;
@@ -126,7 +126,7 @@
   .customer_online_message .app .inputArea .button{
     padding-bottom: 12px;
 
-    background-image: url("/image/submit.png");
+    background-image: url("/client/image/submit.png");
     background-repeat:no-repeat;
     background-size: contain;
     border:2px #9999FF none;
