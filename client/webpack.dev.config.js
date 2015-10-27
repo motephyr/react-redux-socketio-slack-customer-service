@@ -13,7 +13,7 @@ var plugins = [
   new webpack.NoErrorsPlugin()
 ]
 
-var assets_path = "dist";
+var assets_path = "";
 var assets_host = "http://localhost:8080/"+assets_path;
 
 
