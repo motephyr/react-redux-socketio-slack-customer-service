@@ -1,7 +1,6 @@
 function _changeIframeSize(w, h){
-    var f =document.getElementById('iframe');
-    f.width = w
-    f.height = h
+    _messageIframe.width = w;
+    _messageIframe.height = h;
 }
 
 var _getMaxZindex = function(dom){
@@ -22,12 +21,21 @@ var _getMaxZindex = function(dom){
 
 window.addEventListener("load", function _onload(event){
     window.removeEventListener("load", _onload, false);
-    var dom = document.createElement('iframe');
-    dom.id = "iframe";
-    dom.src = "http://52.68.126.89/client/index.html";
+    window.addEventListener('message', function(e){
+        if(e.data == "onPanelHeaderClick"){
+            _changeIframeSize(60,22);
+        }else if(e.data == "onButtonClick"){
+            _changeIframeSize(370, document.body.clientHeight);
+        }else if(e.data == "debugTest"){
+            alert("cross-domain test");
+        }
+    }, false);
+
+    var dom = window._messageIframe =  document.createElement('iframe');
     dom.style.cssText = "z-index: 16000002;position: fixed; right: 0px; bottom: 0px;margin: 0px;padding: 0px; border: 0px;background: transparent;";
     dom.style['zIndex'] = _getMaxZindex() + 1;
     dom.width = 60;
     dom.height = 22;
+    dom.src = "http://52.68.126.89/client/index.html";
     document.body.appendChild(dom);
 },false);

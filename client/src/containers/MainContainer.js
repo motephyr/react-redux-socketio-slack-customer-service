@@ -35,7 +35,8 @@ export default class MainContainer extends Component {
 
   clicked() {
     this.props.messageBoxActions.change_panel(true)
-    parent._changeIframeSize(370,parent.document.body.clientHeight)
+    if(window.parent) window.parent.postMessage("onButtonClick","*");
+    // parent._changeIframeSize(370,parent.document.body.clientHeight)
   }
 
 

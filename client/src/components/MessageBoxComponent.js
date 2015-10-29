@@ -33,7 +33,8 @@ class MessageHeader extends Component {
 
   handleClick(e) {
     this.props.actions.change_panel(false)
-    parent._changeIframeSize(60,22)
+    // parent._changeIframeSize(60,22)
+    if(window.parent) window.parent.postMessage("onPanelHeaderClick","*");
   }
 
   componentDidMount() {
