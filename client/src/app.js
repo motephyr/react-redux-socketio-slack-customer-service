@@ -17,7 +17,7 @@ import MainContainer from './containers/MainContainer';
 import TestContainer from './containers/TestContainer';
 
 
-export default class Root extends Component {
+export default class App extends Component {
 
   render() {
     const processENV = process.env.NODE_ENV || "development"
@@ -42,6 +42,6 @@ export default class Root extends Component {
         // </DebugPanel>}
 
 ReactDOM.render(
-  <Root />,
-  document.body
+  <App />,
+  document.getElementById('app')
 );
