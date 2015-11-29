@@ -30,9 +30,13 @@ var config = {
       test: /\.js$/,
       loaders: ['babel?stage=0'],
       include: path.join(__dirname, 'src')
-    }]
+    },{
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      }]
   },
   resolve: {
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: ["node_modules", "bower_components"],
     root: path.resolve(__dirname, './src')
   },
