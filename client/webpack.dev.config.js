@@ -1,7 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var plugins = [
+  new ExtractTextPlugin('react-toolbox.css', {
+    allChunks: true
+  }),
   new webpack.ProvidePlugin({
     $: "jquery",
     jQuery: "jquery",
@@ -14,7 +19,7 @@ var plugins = [
 ]
 
 var assets_path = "dist";
-var assets_host = "http://localhost:8080/"+assets_path;
+var assets_host = "http://localhost:8080/" + assets_path;
 
 
 var config = {
@@ -32,22 +37,23 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\.css$/,
-      loader: "style!css"
-    }, {
-      test: /\.js$/,
+      test: /(\.js|\.jsx)$/,
       loaders: ['react-hot', 'babel?stage=0'],
       include: path.join(__dirname, 'src')
-    },{
-        test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
-      }]
+    }, {
+      test: /(\.scss|\.css)$/,
+      loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap!toolbox')
+    }]
   },
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],
     modulesDirectories: ["node_modules", "bower_components"],
     root: path.resolve(__dirname, './src')
   },
+  toolbox: {
+    theme: path.join(__dirname, 'css/toolbox-theme.scss')
+  },
+  postcss: [autoprefixer],
   plugins: plugins
 };
 
