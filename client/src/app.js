@@ -13,8 +13,7 @@ import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
 const store = configureStore();
 
-import MainContainer from './containers/MainContainer';
-import TestContainer from './containers/TestContainer';
+import ChatContainer from './containers/ChatContainer';
 
 
 export default class App extends Component {
@@ -24,7 +23,7 @@ export default class App extends Component {
     return (
       <div className="customer_online_message">
         <Provider store={store} >
-          <MainContainer />
+          <ChatContainer />
         </Provider>
       </div>
     );
