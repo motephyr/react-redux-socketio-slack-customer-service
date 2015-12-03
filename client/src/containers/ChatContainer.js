@@ -44,11 +44,9 @@ export default class MainContainer extends Component {
       <ChatComponent key='a' actions={messageBoxActions} messages={messages} is_email_column_show={is_email_column_show}/> : <button key='b' onClick={::this.clicked}>線上客服</button>;
 
     return (
-      <div>
         <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
           {child}
         </ReactCSSTransitionGroup>
-      </div>
     );
   }
 }

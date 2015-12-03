@@ -10,7 +10,7 @@ import Input from 'react-toolbox/lib/input';
 import Navigation from 'react-toolbox/lib/navigation';
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox';
 import TimePicker from 'react-toolbox/lib/time_picker';
-
+import style from '../../css/app.scss';
 
 
 var suid = Cookie.get('uuid');
@@ -34,7 +34,7 @@ var actions = [
 ];
 
     return (
-      <div>
+      <div className={style.app}>
         <Navigation type='horizontal' actions={actions} />
         <MessageTextarea actions={actions} messages={messages} socket={socket}/>
         <MessageInput actions={actions}  socket={socket} />

@@ -1,4 +1,3 @@
-require('../css/app.css');
 
 import ReactDOM from 'react-dom';
 
@@ -21,7 +20,7 @@ export default class App extends Component {
   render() {
     const processENV = process.env.NODE_ENV || "development"
     return (
-      <div className="customer_online_message">
+      <div>
         <Provider store={store} >
           <ChatContainer />
         </Provider>
