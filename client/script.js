@@ -36,6 +36,6 @@ window.addEventListener("load", function _onload(event){
     dom.style['zIndex'] = _getMaxZindex() + 1;
     dom.width = 60;
     dom.height = 22;
-    dom.src = "http://52.68.126.89/client/index.html";
+    dom.src = window._debugUrl || "http://52.68.126.89/client/index.html";
     document.body.appendChild(dom);
 },false);
