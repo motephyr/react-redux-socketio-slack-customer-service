@@ -43,5 +43,5 @@ export default class Root extends Component {
 
 ReactDOM.render(
   <Root />,
-  document.body
+  document.getElementById('app')
 );
