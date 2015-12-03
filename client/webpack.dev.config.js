@@ -19,7 +19,7 @@ var plugins = [
 ]
 
 var assets_path = "dist";
-var assets_host = "http://localhost:8080/" + assets_path;
+var assets_host = "http://localhost:45537/" + assets_path;
 
 
 var config = {

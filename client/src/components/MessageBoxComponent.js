@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom'
 import Cookie from 'cookies-js'
 import uuid from 'node-uuid'
 import io from 'socket.io-client'
+import Button from 'react-toolbox/lib/button';
+import Input from 'react-toolbox/lib/input'
+
 
 var suid = Cookie.get('uuid');
 if (!suid) {
@@ -163,8 +166,8 @@ class MessageInput extends Component {
     const {actions} = this.props
     return (
       <div className="inputArea">
-        <input className="text" type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
-        <input className="button" type="button" onClick={::this.handleClick} />
+        <Input  type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
+        <Button label="送出" onClick={::this.handleClick} raised accent />
     </div>
     )
   }
