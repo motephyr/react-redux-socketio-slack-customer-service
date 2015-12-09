@@ -1,20 +1,19 @@
-  html,body{
-      margin:0px; padding: 0px; border: 0px; position: fixed;  bottom: 0px; background: transparent;
+  html,
+  body {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    position: fixed;
+    bottom: 0px;
+    background: transparent;
   }
 
   .app {
-    border:#000000 1px solid;
+    border: #000000 1px solid;
+    height: 600px;
   }
 
-  .example-leave {
-    display:none;
-  }
 
-  .example-enter {
-    opacity: 0.01;
-  }
-
-  .example-enter.example-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
+  .field {
+    margin-top:150px;
   }

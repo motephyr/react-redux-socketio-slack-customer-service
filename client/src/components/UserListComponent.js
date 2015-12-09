@@ -19,7 +19,7 @@ if (!suid) {
 }
 
 
-export default class ChatComponent extends Component {
+export default class UserListComponent extends Component {
   static defaultProps = {
     socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
   }

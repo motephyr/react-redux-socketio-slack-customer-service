@@ -1,6 +1,7 @@
 import {Component, PropTypes} from 'react';
-import ChatComponent from '../components/ChatComponent'
-import FilterableProductTable from '../components/FilterableProductTable'
+
+import HomeComponent from '../components/HomeComponent'
+import UserListComponent from '../components/UserListComponent'
 
 import * as MessageBoxActions from '../actions/messagebox';
 
@@ -17,40 +18,40 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
   messageBoxActions: bindActionCreators(MessageBoxActions, dispatch)
 }))
 export default class MainContainer extends Component {
-  // constructor(props){
-  //   super(props);
-  //   // Manually bind this method to the component instance...
-  // }
-  static defaultProps = {
-    // socket: io.connect('?_rtUserId=' + uuid.v4() + '&_rtToken=test')
-  }
-
-  static propTypes = {
-    // You can declare that a prop is a specific JS primitive. By default, these
-    // are all optional.
+  state = {
+    focused: ''
   }
 
   clicked() {
     this.props.messageBoxActions.change_panel(true)
-    if(window.parent) window.parent.postMessage("onButtonClick","*");
+    this.setState({
+      focused: 'Home'
+    });
+    if (window.parent) window.parent.postMessage("onButtonClick", "*");
     // parent._changeIframeSize(370,parent.document.body.clientHeight)
   }
 
+  handleInputName(){
+    this.setState({
+      focused: 'UserList'
+    });
+  }
 
 
   render() {
-    const { is_panel_show,messageBoxActions,is_email_column_show,messages} = this.props;
-    const child = is_panel_show ?
-      <ChatComponent key='a' actions={messageBoxActions} messages={messages} is_email_column_show={is_email_column_show}/> : <button key='b' onClick={::this.clicked}>線上客服</button>;
-
     return (
-        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
-          {child}
-        </ReactCSSTransitionGroup>
+      <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
+        {(this.props.is_panel_show)
+          ? {
+            'Home':  (<HomeComponent key='a' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} onClick={::this.handleInputName} />),
+            'UserList':  (<UserListComponent key='b' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show}/>),
+            'Setting':  (<UserListComponent key='c' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show}/>),
+          }[this.state.focused]
+        : (<button key='d' onClick={::this.clicked}>線上客服</button>)}
+      </ReactCSSTransitionGroup>
     );
   }
 }
 
 //        <Counter actions={counterActions} />
 // <CommentBoxComponent />
-// <FilterableProductTable />

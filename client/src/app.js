@@ -22,7 +22,7 @@ export default class App extends Component {
     return (
       <div>
         <Provider store={store} >
-          <ChatContainer />
+          <ChatContainer items={ ['Home', 'UserList', 'Setting'] }/>
         </Provider>
       </div>
     );
