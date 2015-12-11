@@ -10,10 +10,26 @@
 
   .app {
     border: #000000 1px solid;
-    height: 600px;
+    height: 500px;
+    position:relative;
   }
 
 
   .field {
     margin-top:150px;
+  }
+
+  .inputArea {
+    position:absolute;
+    bottom:0;
+  }
+
+  .text{
+    width:190px;
+    float:left;
+  }
+
+  .button{
+    float:right;
+
   }

@@ -19,29 +19,19 @@ if (!suid) {
 }
 
 
-export default class UserListComponent extends Component {
+export default class UserListPage extends Component {
   static defaultProps = {
     socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
   }
   render() {
-    const {is_email_column_show, messages, socket} = this.props
-
-
-var actions = [
-  { raised: true, icon: 'power'},
-  { label: 'OurChat', raised: false},
-  { raised: true, icon: 'settings'}
-];
+    const {actions,is_email_column_show, messages, socket} = this.props
 
     return (
-      <div className={style.app}>
-        <Navigation type='horizontal' actions={actions} />
         <MessageTextarea actions={actions} messages={messages} socket={socket}/>
-        <MessageInput actions={actions}  socket={socket} />
-      </div>
     )
   }
 }
+        // <MessageInput actions={actions}  socket={socket} />
 
 
 class MessageHeader extends Component {
@@ -114,6 +104,10 @@ class MessageTextarea extends Component {
 
   }
 
+  handleClickPeople(people){
+    alert('a');
+  }
+
   componentDidUpdate() {
     var node = ReactDOM.findDOMNode(this);
     node.scrollTop = node.scrollHeight;
@@ -151,15 +145,32 @@ class MessageTextarea extends Component {
     <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
       caption='Dr. Manhattan'
-      rightIcon='star' />
+      leftIcon='empty'
+      onClick={this.handleClickPeople.bind(this, '')} />
     <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/o.jpg'
       caption='Ozymandias'
-      rightIcon='star' />
+      leftIcon='message' />
     <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
       caption='Rorschach'
-      rightIcon='star'/>
+      leftIcon='face' />
+    <ListItem
+      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
+      caption='Rorschach'
+      leftIcon='star' />
+    <ListItem
+      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
+      caption='Rorschach'
+      leftIcon='favorite' />
+    <ListItem
+      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
+      caption='Rorschach'
+      leftIcon='done' />
+    <ListItem
+      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
+      caption='Rorschach'
+      leftIcon='face' />
   </List>
       </div>
     )
@@ -189,10 +200,10 @@ class MessageInput extends Component {
   render() {
     const {actions} = this.props
     return (
-      <div className="inputArea">
-        <Input  type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
-        <Button label="送出" onClick={::this.handleClick} raised accent />
-    </div>
+      <div className={style.inputArea}>
+        <Input className={style.text} type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
+        <Button className={style.button} icon="send" onClick={::this.handleClick} accent floating  />
+      </div>
     )
   }
 }

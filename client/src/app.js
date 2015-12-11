@@ -12,7 +12,7 @@ import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
 const store = configureStore();
 
-import ChatContainer from './containers/ChatContainer';
+import ChatNavigation from './containers/ChatNavigation';
 
 
 export default class App extends Component {
@@ -22,7 +22,7 @@ export default class App extends Component {
     return (
       <div>
         <Provider store={store} >
-          <ChatContainer items={ ['Home', 'UserList', 'Setting'] }/>
+          <ChatNavigation />
         </Provider>
       </div>
     );
