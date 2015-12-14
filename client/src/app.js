@@ -20,11 +20,9 @@ export default class App extends Component {
   render() {
     const processENV = process.env.NODE_ENV || "development"
     return (
-      <div>
         <Provider store={store} >
           <ChatNavigation />
         </Provider>
-      </div>
     );
   }
 }

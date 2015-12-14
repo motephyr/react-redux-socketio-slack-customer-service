@@ -25,7 +25,7 @@ window.addEventListener("load", function _onload(event){
         if(e.data == "onPanelHeaderClick"){
             _changeIframeSize(60,22);
         }else if(e.data == "onButtonClick"){
-            _changeIframeSize(370, document.body.clientHeight);
+            _changeIframeSize(256, document.body.clientHeight);
         }else if(e.data == "debugTest"){
             alert("cross-domain test");
         }

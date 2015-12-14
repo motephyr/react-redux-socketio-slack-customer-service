@@ -11,6 +11,8 @@
   .app {
     border: #000000 1px solid;
     height: 500px;
+    width: 252px;
+    background: white;
     position:relative;
   }
 
@@ -32,4 +34,64 @@
   .button{
     float:right;
 
+  }
+
+  .textArea {
+    padding: 0 5px 0 5px;
+    height:500px;
+    overflow:auto;
+  }
+
+  .time {
+    background: #F4F4F4;
+    border-radius: 4px;
+    font-family: HelveticaNeue;
+    font-size: 10px;
+    color: #BFBFBF;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .message {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .message_time {
+    font-family: HelveticaNeue;
+    font-size: 10px;
+    color: #BFBFBF;
+    line-height: 12px;
+  }
+
+  .message_left {
+    float: left;
+  }
+
+  .message_left .message_block {
+    background: #DFF0D8;
+  }
+
+  .message_right {
+    float: right;
+  }
+
+  .message_right .message_block {
+    background: #D9EDF7;
+  }
+
+  .message_block {
+    /* Rectangle 15: */
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    word-break: break-all;
+    max-width: 190px;
+    font-family: HelveticaNeue;
+    font-size: 14px;
+    color: #000000;
+    line-height: 16px;
+    padding: 10px 20px;
   }

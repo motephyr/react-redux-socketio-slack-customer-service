@@ -1,10 +1,8 @@
 import {Component, PropTypes} from 'react';
-import Counter from '../components/Counter';
 import MessageBoxComponent from '../components/MessageBoxComponent'
 import CommentBoxComponent from '../components/CommentBoxComponent'
 import FilterableProductTable from '../components/FilterableProductTable'
 
-import * as CounterActions from '../actions/counter';
 import * as MessageBoxActions from '../actions/messagebox';
 
 import {connect} from 'react-redux';

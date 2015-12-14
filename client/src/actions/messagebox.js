@@ -1,5 +1,15 @@
-export const INPUT_MESSAGE = 'INPUT_MESSAGE'
+export const CHANGE_PAGE = 'CHANGE_PAGE'
 
+export function change(page,user_id) {
+  return {
+    type: CHANGE_PAGE,
+    page,
+    user_id
+  }
+}
+
+
+export const INPUT_MESSAGE = 'INPUT_MESSAGE'
 
 export function input(messages) {
   return {
