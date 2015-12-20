@@ -26,7 +26,7 @@ App.get('/client/:project', function (req, res, next) {
   res.sendFile(__dirname + '/client/' + project);
 });
 
-App.get('*', function (req, res, next){
+App.get('*', function (req, res, next) {
   res.sendFile(__dirname + '/client/index.html');
 })
 

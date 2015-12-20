@@ -1,4 +1,4 @@
-import {Component, PropTypes} from 'react'
+import {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import _ from 'lodash'
 import ReactDOM from 'react-dom'
@@ -18,8 +18,6 @@ if (!suid) {
   suid = Cookie.set('uuid', uuid.v4())
 }
 
-
-
 export default class SettingPage extends Component {
 
   render() {
@@ -27,10 +25,21 @@ export default class SettingPage extends Component {
 
 
     return (
-          <div>
-            <Input type='text' label='修改姓名' required={true} />
-            <Button type='submit' label='儲存' raised accent onClick={this.props.onClick} />
-          </div>
+      <div>
+        <Input type='text' label='修改姓名' required={true} />
+        <Input
+          type='text'
+          label='修改email'
+          required={true} />
+        <Input type='file' label='上傳圖片' required={true} />
+
+        <Button
+          type='submit'
+          label='儲存'
+          raised
+          accent
+          onClick={this.props.onClick} />
+      </div>
     )
   }
 }

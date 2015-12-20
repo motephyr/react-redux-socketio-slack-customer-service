@@ -102,7 +102,7 @@ export default class ChatNavigation extends Component {
       icon: 'backspace',
       onClick: this.transUserListPage.bind(this)
     }];
-console.log(this.props.user_id);
+
     return (
       <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
         {(this.props.is_panel_show)

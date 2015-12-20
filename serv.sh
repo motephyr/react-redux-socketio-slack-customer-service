@@ -8,7 +8,7 @@ case "$1" in
     ;;
   pack:dev)
     npm run clean
-    npm run build:dev &
+    npm run build:dev & 
     npm run dev
     ;;
   stop)
