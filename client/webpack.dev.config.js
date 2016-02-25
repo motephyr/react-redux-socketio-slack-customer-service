@@ -28,6 +28,11 @@ var config = {
       'webpack-dev-server/client?' + assets_host,
       'webpack/hot/only-dev-server',
       './client/src/app.js'
+    ],
+    app_message: [
+      'webpack-dev-server/client?' + assets_host,
+      'webpack/hot/only-dev-server',
+      './client/src/app_message.js'
     ]
   },
   output: {
