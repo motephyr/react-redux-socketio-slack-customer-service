@@ -4,7 +4,7 @@ import _ from 'lodash'
 import ReactDOM from 'react-dom'
 import Cookie from 'cookies-js'
 import uuid from 'node-uuid'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox';
@@ -19,13 +19,13 @@ if (!suid) {
 
 export default class UserListPage extends Component {
   static defaultProps = {
-    socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
+    // socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
   }
   render() {
     const {actions,is_email_column_show, messages, socket} = this.props
 
     return (
-        <MessageTextarea actions={actions} messages={messages} socket={socket}/>
+        <MessageTextarea actions={actions} messages={messages} />
     )
   }
 }
@@ -37,9 +37,9 @@ class MessageTextarea extends Component {
   componentDidMount() {
     const {actions} = this.props;
 
-    this.props.socket.on('new_message', (msg) => {
-      actions.input(msg)
-    })
+    // this.props.socket.on('new_message', (msg) => {
+    //   actions.input(msg)
+    // })
 
   }
 
@@ -102,10 +102,10 @@ class MessageInput extends Component {
   handleClick(e) {
     const {actions} = this.props
 
-    this.props.socket.emit('new_message', {
-      name: Cookie.get('email_value'),
-      text: ReactDOM.findDOMNode(this.refs.text).value.trim()
-    });
+    // this.props.socket.emit('new_message', {
+    //   name: Cookie.get('email_value'),
+    //   text: ReactDOM.findDOMNode(this.refs.text).value.trim()
+    // });
   }
 
   handleKeyPress(e) {

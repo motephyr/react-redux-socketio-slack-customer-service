@@ -3,30 +3,26 @@ import {connect} from 'react-redux'
 import _ from 'lodash'
 import ReactDOM from 'react-dom'
 import Cookie from 'cookies-js'
-import uuid from 'node-uuid'
-import io from 'socket.io-client'
+// import uuid from 'node-uuid'
+// import io from 'socket.io-client'
 import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input'
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox';
 import style from '../../css/app.scss';
 
 
-var suid = Cookie.get('uuid');
-if (!suid) {
-  suid = Cookie.set('uuid', uuid.v4())
-}
 
 
 export default class UserConversationPage extends Component {
   static defaultProps = {
-    socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
+    // socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
   }
   render() {
     const {actions,is_email_column_show,messages,socket} = this.props
     return (
       <div>
-        <MessageTextarea actions={actions} messages={messages} socket={socket}/>
-        <MessageInput actions={actions}  socket={socket} />
+        <MessageTextarea actions={actions} messages={messages}/>
+        <MessageInput actions={actions} />
       </div>
     )
   }
