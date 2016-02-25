@@ -2,30 +2,23 @@ import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
 import ReactDOM from 'react-dom'
-import Cookie from 'cookies-js'
 import uuid from 'node-uuid'
 import io from 'socket.io-client'
 import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input'
 
-
-var suid = Cookie.get('uuid');
-if (!suid) {
-  suid = Cookie.set('uuid', uuid.v4())
-}
-
-
 export default class MessageBoxComponent extends Component {
   static defaultProps = {
-    socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
+    //socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test' + '&_rtDom=' + location.host)
   }
+
   render() {
-    const {actions,is_email_column_show,messages,socket} = this.props
+    const {actions,is_email_column_show,messages} = this.props
     return (
       <div className="app">
-        <MessageHeader actions={actions} is_email_column_show={is_email_column_show} socket={socket} />
-        <MessageTextarea actions={actions} messages={messages} socket={socket}/>
-        <MessageInput actions={actions}  socket={socket} />
+        <MessageHeader actions={actions} is_email_column_show={is_email_column_show} />
+        <MessageTextarea actions={actions} messages={messages}/>
+        <MessageInput actions={actions} />
       </div>
     )
   }
@@ -43,9 +36,9 @@ class MessageHeader extends Component {
   componentDidMount() {
     if (Cookie.get('email_value')) {
       this.props.actions.change_email_column(true)
-      this.props.socket.emit('new_email_on_suid', {
-        email: Cookie.get('email_value')
-      });
+      // this.props.socket.emit('new_email_on_suid', {
+      //   email: Cookie.get('email_value')
+      // });
     }
   }
   componentDidUpdate() {
@@ -64,9 +57,9 @@ class MessageHeader extends Component {
       Cookie.set('email_value', ReactDOM.findDOMNode(this.refs.email).value.trim());
       this.props.actions.change_email_column(true)
       //此時綁定Email和它的userid
-      this.props.socket.emit('new_email_on_suid', {
-        email: Cookie.get('email_value')
-      });
+      // this.props.socket.emit('new_email_on_suid', {
+      //   email: Cookie.get('email_value')
+      // });
     }
   }
 
@@ -96,9 +89,9 @@ class MessageTextarea extends Component {
   componentDidMount() {
     const {actions} = this.props;
 
-    this.props.socket.on('new_message', (msg) => {
-      actions.input(msg)
-    })
+    // this.props.socket.on('new_message', (msg) => {
+    //   actions.input(msg)
+    // })
 
   }
 
@@ -150,10 +143,10 @@ class MessageInput extends Component {
   handleClick(e) {
     const {actions} = this.props
 
-    this.props.socket.emit('new_message', {
-      name: Cookie.get('email_value'),
-      text: ReactDOM.findDOMNode(this.refs.text).value.trim()
-    });
+    // this.props.socket.emit('new_message', {
+    //   name: Cookie.get('email_value'),
+    //   text: ReactDOM.findDOMNode(this.refs.text).value.trim()
+    // });
   }
 
   handleKeyPress(e) {
