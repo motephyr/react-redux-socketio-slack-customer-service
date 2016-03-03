@@ -20,7 +20,8 @@ import Navigation from 'react-toolbox/lib/navigation';
   is_email_column_show: state.messagebox.ui.is_email_column_show,
   page: state.messagebox.ui.page,
   user_id: state.messagebox.ui.user_id,
-  messages: state.messagebox.messages
+  messages: state.messagebox.messages,
+  users: state.messagebox.users
 }), dispatch => ({
   messageBoxActions: bindActionCreators(MessageBoxActions, dispatch)
 }))
@@ -29,10 +30,23 @@ export default class ChatNavigation extends Component {
     focused: ''
   }
 
+  componentWillMount(){
+    var action = this.props.messageBoxActions;
+    window.socketInstance.on('initial_list', function(data){
+      action.change_list(data);
+    });
+    window.socketInstance.on('user_joined', function(data){
+      action.join_user(data);
+    });
+    window.socketInstance.on('user_left', function(data){
+      action.left_user(data);
+    });
+  }
+
   poweron() {
     this.props.messageBoxActions.change_panel(true)
     if (this.props.page === '') {
-      this.props.messageBoxActions.change('Home');
+      this.props.messageBoxActions.change('UserList');
     }
     if (window.parent) window.parent.postMessage("onButtonClick", "*");
     // parent._changeIframeSize(370,parent.document.body.clientHeight)
@@ -102,7 +116,6 @@ export default class ChatNavigation extends Component {
       icon: 'backspace',
       onClick: this.transUserListPage.bind(this)
     }];
-
     return (
       <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300} >
         {(this.props.is_panel_show)
@@ -112,7 +125,7 @@ export default class ChatNavigation extends Component {
             </div>),
               'UserList':  (<div className={style.app}>
             <Navigation type='horizontal' actions={normalActions} />
-            <UserListPage key='b' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} actions={this.props.messageBoxActions} />
+            <UserListPage key='b' users={this.props.users} actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} actions={this.props.messageBoxActions} />
             </div>),
               'Setting':  (<div className={style.app}>
             <Navigation type='horizontal' actions={backActions} />
