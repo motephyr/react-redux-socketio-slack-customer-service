@@ -69,7 +69,19 @@ module.exports = function (socket, io) {
   
   socket.on('change_name', function(data){
     // Find the rooms involved by current user 
+    var rooms = socket.rooms;
+    var oldname = socket.username;
+    socket.username = data.new_name;
+    // socket.emit('change_name', { new_name: socket.username });
     // And braocast to the related sockets.
+    if(rooms.length > 1){
+      for(var i = 1, len = rooms.length; i < len; i++){
+        io.in(rooms[i]).emit('change_name', { old_name: oldname, new_name: socket.username });
+        // broacast but sender
+        // socket.broadcast.to(rooms[i]).emit('change_name', { new_name: socket.username });
+      }
+    }
+    // ...
   });
 
   // means dbclick the another user
@@ -86,7 +98,7 @@ module.exports = function (socket, io) {
   });
 
   socket.on('new_message', function(data){
-    socket.broadcast.to(data.room).emit('new_message', data); 
+    socket.broadcast.to(data.room).emit('new_message', {room:data.room, message:data.message}); 
     // io.in(data.room).emit('new_message', data.message);
   });
 
