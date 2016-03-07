@@ -12,12 +12,12 @@ const initialState = {
     name: '@customerService',
     text: "hello,may i help you?",
     time: new Date().toString()
-  },{
+  }, {
     id: 1,
     name: '@customerService',
     text: "hello,may i help you?",
     time: new Date().toString()
-  },{
+  }, {
     id: 2,
     name: 'customerService',
     text: "hello,may i help you?ajsoidfjaosidjfpoaisjdpfoiajsdpoijgqeproijgqoepirjgpoi/noajsdfoiasjdofi",
@@ -30,36 +30,53 @@ export default function messagebox(state = initialState, action) {
   //action是指action傳來的值
   switch (action.type) {
 
-  case types.CHANGE_PAGE:
-    return {...state, ui: {...state.ui,
+    case types.CHANGE_PAGE:
+      return {...state,
+        ui: {...state.ui,
           page: action.page,
           user_id: action.user_id
-      }
-    };
+        }
+      };
 
-  case types.INPUT_MESSAGE:
-    return {...state, messages: [...state.messages, {
-        id: state.messages.reduce((maxId, messages) => Math.max(messages.id, maxId), -1) + 1,
-        name: action.messages.name,
-        text: action.messages.text,
-        time: new Date().toString()
-      }]
-    };
+    case types.INPUT_MESSAGE:
+      return {...state,
+        messages: [...state.messages, {
+          id: state.messages.reduce((maxId, messages) => Math.max(messages.id, maxId), -1) + 1,
+          name: action.messages.name,
+          text: action.messages.text,
+          time: new Date().toString()
+        }]
+      };
 
-  case types.CHANGEPANEL_ISSHOW:
-    return {...state, ui: {...state.ui,
+    case types.CHANGEPANEL_ISSHOW:
+      return {...state,
+        ui: {...state.ui,
           is_panel_show: action.is_show
+        }
       }
-    }
 
-  case types.CHANGEEMAILCOLUMN_ISSHOW:
-    return {...state, ui: {...state.ui,
+    case types.CHANGEEMAILCOLUMN_ISSHOW:
+      return {...state,
+        ui: {...state.ui,
           is_email_column_show: action.is_show
+        }
       }
-    }
+    case types.CHANGE_LIST:
+      return {...state,
+        room: action.room,
+        users: action.users
+      }
+    case types.JOIN_USER:
+      return {...state,
+        users: _.uniq([...state.users, action.user])
+      }
+    case types.LEFT_USER:
+      return {...state,
+        users: _.remove(state.users, function(username) {return username === action.user})
+      }
 
-  default:
-    return state
+    default:
+      return state
   }
 }
 

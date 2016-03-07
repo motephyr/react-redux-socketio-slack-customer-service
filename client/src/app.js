@@ -31,6 +31,18 @@ function getValidJSON (str) {
     }
 }
 
+export default class App extends Component {
+
+  render() {
+    const processENV = process.env.NODE_ENV || "development"
+    return (
+        <Provider store={store} >
+          <ChatNavigation />
+        </Provider>
+    );
+  }
+}
+
 window.socketInstance = null;
 
 function socket_init(id, domainName){
@@ -51,21 +63,10 @@ function socket_init(id, domainName){
   });
 
   // these may be in components.
-  socketInstance.on('initial_list', function(data){
-    alert('List: ' + JSON.stringify(data));
-  });
-
-  socketInstance.on('user_joined', function(data){
-    alert('Joined User: ' + data.username);
-  });
 
   socketInstance.on('new_message', function(data){
     // maybe
     alert('Message to: ' + data.room + " content:" + data.message);
-  });
-
-  socketInstance.on('user_left', function(data){
-    alert('Left User: ' + data.username);
   });
 
   socketInstance.on('room_ready', function(data){
@@ -74,6 +75,11 @@ function socket_init(id, domainName){
     // Here should send a message back to main page for knowing the user states,
     // like add iframe, highlight the box, pop up chat window, and so on....
   });
+
+  ReactDOM.render(
+    <App />,
+    document.getElementById('app')
+  );
 
 }
 
@@ -122,17 +128,7 @@ window.addEventListener('message', function(e){
 });
 
 
-export default class App extends Component {
 
-  render() {
-    const processENV = process.env.NODE_ENV || "development"
-    return (
-        <Provider store={store} >
-          <ChatNavigation />
-        </Provider>
-    );
-  }
-}
 
           // <Router history={history} >
           //   <Route path="/client/index.html" component={RouteHandler}>
@@ -144,7 +140,4 @@ export default class App extends Component {
         //   <DevTools store={store} monitor={LogMonitor} />
         // </DebugPanel>}
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
+

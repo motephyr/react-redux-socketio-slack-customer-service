@@ -22,10 +22,10 @@ export default class UserListPage extends Component {
     // socket: io.connect('?_rtUserId=' + suid + '&_rtToken=test')
   }
   render() {
-    const {actions,is_email_column_show, messages, socket} = this.props
+    const {actions,is_email_column_show, messages, socket,users} = this.props
 
     return (
-        <MessageTextarea actions={actions} messages={messages} />
+        <MessageTextarea actions={actions} messages={messages} users={users}/>
     )
   }
 }
@@ -53,11 +53,19 @@ class MessageTextarea extends Component {
   }
 
   render() {
+    var {users} = this.props;
     return (
       <div>
         <List ripple>
     <ListDivider />
-    <ListItem
+    {_.map(users,(user) => {return (
+<ListItem
+      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
+      caption={user}
+      leftIcon='empty'
+      onClick={this.handleClickPeople.bind(this, 'DrAAMan')} />
+      )})}
+{/*    <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
       caption='Dr. Manhattan'
       leftIcon='empty'
@@ -87,7 +95,7 @@ class MessageTextarea extends Component {
     <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
       caption='Rorschach'
-      leftIcon='face' />
+      leftIcon='face' />*/}
   </List>
       </div>
     )
