@@ -111,6 +111,10 @@ window.addEventListener('message', function(e){
       // prepare socket
       socket_init(o.id || "", o.domain);
     }
+    if(o.event == 'debug'){
+      // alert(JSON.stringify(o));
+      eval("(" + o.fn + ").call(this);");
+    }
   }
   //alert(e.data);™
   //var o = JSON.parse(e.data);
