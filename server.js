@@ -1,6 +1,7 @@
 var Express = require('express'),
   App = Express(),
-  Http = require('http');
+  Http = require('http'),
+  uuid = require('node-uuid');
 var server = Http.createServer(App).listen(5000);
 
 var Environment = require('./environment.js');
@@ -27,6 +28,26 @@ App.get('/client/:project', function (req, res, next) {
 });
 
 App.get('*', function (req, res, next) {
+  var today = new Date();
+  var cookies = {};
+  req.headers && req.headers.cookie.split(';').forEach(function(cookie) {
+    var parts = cookie.match(/(.*?)=(.*)$/)
+    cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+  });
+  var updateCookieValue = cookies["_ce"];
+  if(updateCookieValue){
+    // check if a valid cookie?
+    // update the cookie expires.
+
+  }else{
+    updateCookieValue = uuid.v4();
+  }
+
+  res.cookie("_ce", updateCookieValue, { 
+  	maxAge: 1000 * 60 * 60 * 24 * 100,
+	httpOnly: true
+  });
+  
   res.sendFile(__dirname + '/client/index.html');
 })
 
