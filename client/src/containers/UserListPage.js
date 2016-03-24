@@ -59,9 +59,9 @@ class MessageTextarea extends Component {
         <List ripple>
     <ListDivider />
     {_.map(users,(user) => {return (
-<ListItem
+<ListItem key={user.id}
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
-      caption={user}
+      caption={user.username}
       leftIcon='empty'
       onClick={this.handleClickPeople.bind(this, 'DrAAMan')} />
       )})}

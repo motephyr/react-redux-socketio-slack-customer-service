@@ -19,7 +19,7 @@ import Navigation from 'react-toolbox/lib/navigation';
   is_panel_show: state.messagebox.ui.is_panel_show,
   is_email_column_show: state.messagebox.ui.is_email_column_show,
   page: state.messagebox.ui.page,
-  user_id: state.messagebox.ui.user_id,
+  currentUser: state.messagebox.currentUser,
   messages: state.messagebox.messages,
   users: state.messagebox.users
 }), dispatch => ({
@@ -33,12 +33,15 @@ export default class ChatNavigation extends Component {
   componentWillMount(){
     var action = this.props.messageBoxActions;
     window.socketInstance.on('initial_list', function(data){
-      action.change_list(data);
+      //alert('init')
+      action.initial_list(data);
     });
     window.socketInstance.on('user_joined', function(data){
+      //alert('join');
       action.join_user(data);
     });
     window.socketInstance.on('user_left', function(data){
+      //alert('left');
       action.left_user(data);
     });
   }
@@ -71,7 +74,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'Our Chat ',
+      label: 'Enter name',
       raised: false
     }, {
       raised: false,
@@ -83,7 +86,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'Our Chat ',
+      label: 'UserList',
       raised: false
     }, {
       raised: true,
@@ -96,7 +99,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'Our Chat ',
+      label: 'Setting',
       raised: false
     }, {
       raised: true,
@@ -109,7 +112,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: this.props.user_id,
+      label: 'UserConversation',
       raised: false
     }, {
       raised: true,
@@ -133,7 +136,7 @@ export default class ChatNavigation extends Component {
             </div>),
               'UserConversation':  (<div className={style.app}>
             <Navigation type='horizontal' actions={userActions} />
-            <UserConversationPage key='d' user_id={this.props.user_id} actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
+            <UserConversationPage key='d' user_id={(this.props.currentUser) ? this.props.currentUser.id : ''} actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
             </div>),
             }[this.props.page]
           )

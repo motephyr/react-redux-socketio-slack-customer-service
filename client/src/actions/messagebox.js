@@ -39,11 +39,12 @@ export function change_email_column(is_show) {
 
 export const CHANGE_LIST = 'CHANGE_LIST'
 
-export function change_list(data) {
+export function initial_list(data) {
   return {
     type: CHANGE_LIST,
     room: data.room,
-    users: data.users
+    users: data.users,
+    currentUser: data.currentUser
   }
 }
 
@@ -52,7 +53,7 @@ export const JOIN_USER = 'JOIN_USER'
 export function join_user(data) {
   return {
     type: JOIN_USER,
-    user: data.username
+    user: data
   }
 }
 
@@ -61,6 +62,6 @@ export const LEFT_USER = 'LEFT_USER'
 export function left_user(data) {
   return {
     type: LEFT_USER,
-    user: data.username
+    user: data
   }
 }

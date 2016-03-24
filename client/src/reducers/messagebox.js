@@ -64,7 +64,8 @@ export default function messagebox(state = initialState, action) {
     case types.CHANGE_LIST:
       return {...state,
         room: action.room,
-        users: action.users
+        users: action.users,
+        currentUser: action.currentUser
       }
     case types.JOIN_USER:
       return {...state,
@@ -72,7 +73,9 @@ export default function messagebox(state = initialState, action) {
       }
     case types.LEFT_USER:
       return {...state,
-        users: _.remove(state.users, function(username) {return username === action.user})
+        users: _.filter(state.users, function(data) {
+          return data.id !== action.user.id
+        })
       }
 
     default:
