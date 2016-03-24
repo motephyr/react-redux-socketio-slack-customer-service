@@ -79,7 +79,7 @@ module.exports = function (socket, io) {
       room: defaultRoom, 
       users: outputUserList,
       currentUser: {
-        id: socket.id,
+        id: socket.ceid,
         username: socket.username
       }
     });
@@ -138,11 +138,13 @@ module.exports = function (socket, io) {
     //   console.log(io.sockets.connected[clientId]);
     // }
 
+    var roomName = [socket.currentDomain,socket.ceid,(new Date()).getTime()].join('_');
+
     // if yes
     // ...
     // if not
       // back to the chat page for create a new iframe by this room name
-      socket.emit('room_ready', { room: [socket.currentDomain,socket.username,(new Date()).getTime()].join('-') });
+      socket.emit('room_ready', { room: roomName });
       // 
       // ...
       // 
