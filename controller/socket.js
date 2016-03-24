@@ -63,17 +63,26 @@ module.exports = function (socket, io) {
 
     var outputUserList = [];
     for(var id in ceidToSocketArray){
-      var cs = ceidToSocketArray[id][0];
-      // outputUserList.push({
-      //   id: cs.ceid,
-      //   username: cs.username
-      // });
-      outputUserList.push(cs.username);
+      if(id != socket.ceid){
+        var cs = ceidToSocketArray[id][0];
+        outputUserList.push({
+          id: id,
+          username: cs.username
+        });
+      }
+      // outputUserList.push(cs.username);
     }
 
     socket.join(defaultRoom);
     socket.joinedRooms.push(defaultRoom);
-    socket.emit("initial_list", { room: defaultRoom, users: outputUserList });
+    socket.emit("initial_list", { 
+      room: defaultRoom, 
+      users: outputUserList,
+      currentUser: {
+        id: socket.id,
+        username: socket.username
+      }
+    });
     io.in(defaultRoom).emit('user_joined', {username: socket.username});
 
   }else{
