@@ -63,8 +63,8 @@ module.exports = function (socket, io) {
 
     socket.join(defaultRoom);
     socket.joinedRooms.push(defaultRoom);
-    
-    io.in(defaultRoom).emit('user_joined', {username: socket.username});
+
+    io.in(defaultRoom).emit('user_joined', {id:socket.ceid, username: socket.username});
 
   }else{
     // open new tab but access same domain OR
