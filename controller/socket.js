@@ -61,28 +61,9 @@ module.exports = function (socket, io) {
 
     ceidToSocketArray[socket.ceid] = [socket];
 
-    var outputUserList = [];
-    for(var id in ceidToSocketArray){
-      if(id != socket.ceid){
-        var cs = ceidToSocketArray[id][0];
-        outputUserList.push({
-          id: id,
-          username: cs.username
-        });
-      }
-      // outputUserList.push(cs.username);
-    }
-
     socket.join(defaultRoom);
     socket.joinedRooms.push(defaultRoom);
-    socket.emit("initial_list", { 
-      room: defaultRoom, 
-      users: outputUserList,
-      currentUser: {
-        id: socket.ceid,
-        username: socket.username
-      }
-    });
+    
     io.in(defaultRoom).emit('user_joined', {username: socket.username});
 
   }else{
@@ -96,13 +77,32 @@ module.exports = function (socket, io) {
     socket.joinedRooms.forEach(function(r){
       socket.join(r);
     });
-
+    
     if(socketsArray) socketsArray.push(socket);
     else ceidToSocketArray[socket.ceid] = [socket];
     
     delete socketCache[cacheKey];
     // socketCache[cacheKey] = null;
   }
+
+  var outputUserList = [];
+  for(var id in ceidToSocketArray){
+    if(id != socket.ceid){
+      var cs = ceidToSocketArray[id][0];
+      outputUserList.push({
+        id: id,
+        username: cs.username
+      });
+    }
+  }
+  socket.emit("initial_list", { 
+    room: defaultRoom, 
+    users: outputUserList,
+    currentUser: {
+      id: socket.ceid,
+      username: socket.username
+    }
+  });
 
   console.log("Socket connected! [" + socket.id + " in " + socket.currentDomain + "]");
   console.log(domainToUsers);
@@ -129,8 +129,8 @@ module.exports = function (socket, io) {
   // means dbclick the another user
   socket.on('create_room', function(data){
     // Find the room involved by current user and target users  (data.targetUsers : Array)
-    var users = data.targetUsers;
-    
+    var targetId = data.targetUser;
+    var selfId = socket.ceid;
     // socket.join('test room');
     // var clients = io.sockets.adapter.rooms['test room'];
     // console.log(clients);
@@ -139,6 +139,9 @@ module.exports = function (socket, io) {
     // }
 
     var roomName = [socket.currentDomain,socket.ceid,(new Date()).getTime()].join('_');
+
+    var targetSocketList = ceidToSocketArray[targetId];
+    var selfSocketList = ceidToSocketArray[selfId];
 
     // if yes
     // ...
