@@ -15,6 +15,20 @@ var domainToUsers = {};
 //   ...
 // }
 
+var domainToRooms = {};
+// {
+//   "google.com": {
+//     "room1":[ceid, ...],
+//     "room2":[ceid, ...],
+//     ...
+//   },
+//   "yahoo.com": {
+//     "room3":[ceid, ...],
+//     ...
+//   },
+//   ...
+// }
+
 var socketCache = {};
 // { "ceid1-google.com": socketObject }
 // client 
@@ -27,6 +41,8 @@ module.exports = function (socket, io) {
   // var joinedRoom = socket.joinedRoom;
 
   var ceidToSocketArray = domainToUsers[socket.currentDomain];
+
+  var roomToCeidArray = domainToRooms[socket.currentDomain];
 
   if(!socket.ceid){
     // socket.ceid
@@ -49,9 +65,12 @@ module.exports = function (socket, io) {
 
   if(!socket.username){
     socket.username = 'anonymous_' + (new Date()).getTime();
-    socket.emit('change_name', { new_name: socket.username });
+    socket.emit('change_username_cookie', { username: socket.username });
   }
 
+
+  // check the rooms maps by specified domain
+  if(!roomToCeidArray) roomToCeidArray = domainToRooms[socket.currentDomain] = {};
 
   // check the users maps by specified domain
   if(!ceidToSocketArray) ceidToSocketArray = domainToUsers[socket.currentDomain] = {};
@@ -63,6 +82,9 @@ module.exports = function (socket, io) {
 
     socket.join(defaultRoom);
     socket.joinedRooms.push(defaultRoom);
+    
+    if(!roomToCeidArray[defaultRoom]) roomToCeidArray[defaultRoom] = [];
+    roomToCeidArray[defaultRoom].push(socket.ceid);
 
     // io.in(defaultRoom).emit('user_joined', {id:socket.ceid, username: socket.username});
     socket.broadcast.to(defaultRoom).emit('user_joined', {id:socket.ceid, username: socket.username} );
@@ -115,43 +137,51 @@ module.exports = function (socket, io) {
     var rooms = socket.rooms;
     var oldname = socket.username;
     socket.username = data.new_name;
-    // socket.emit('change_name', { new_name: socket.username });
     // And braocast to the related sockets.
     if(rooms.length > 1){
       for(var i = 1, len = rooms.length; i < len; i++){
-        io.in(rooms[i]).emit('change_name', { old_name: oldname, new_name: socket.username });
+        io.in(rooms[i]).emit('change_name', { id: socket.ceid, username: socket.username });
         // broacast but sender
-        // socket.broadcast.to(rooms[i]).emit('change_name', { new_name: socket.username });
+        // socket.broadcast.to(rooms[i]).emit('change_name', { id: socket.ceid, username: socket.username });
       }
     }
-    // ...
+    socket.emit('change_username_cookie', { username: socket.username });
   });
 
   // means dbclick the another user
   socket.on('create_room', function(data){
-    // Find the room involved by current user and target users  (data.targetUsers : Array)
     var targetId = data.targetUser;
     var selfId = socket.ceid;
-    // socket.join('test room');
-    // var clients = io.sockets.adapter.rooms['test room'];
-    // console.log(clients);
-    // for (var clientId in clients) {
-    //   console.log(io.sockets.connected[clientId]);
-    // }
+    var roomName;
+    // check if duplicate room
+    
+    for(var room in roomToCeidArray){
+      var checkList = roomToCeidArray[room];
+      if(checkList.length == 2 && checkList.indexOf(targetId) != -1 && checkList.indexOf(selfId) != -1){
+        roomName = room;
+        // maybe duplicate rooms when participations are more than two
+      }
+    }
 
-    var roomName = [socket.currentDomain,socket.ceid,(new Date()).getTime()].join('_');
+    if(!roomName){
+      roomName = [socket.currentDomain,socket.ceid,(new Date()).getTime()].join('_');
+      var targetSocketList = ceidToSocketArray[targetId] || [];
+      var selfSocketList = ceidToSocketArray[selfId] || [];
 
-    var targetSocketList = ceidToSocketArray[targetId];
-    var selfSocketList = ceidToSocketArray[selfId];
+      (targetSocketList.cnocat(selfSocketList)).forEach(function(s){
+        s.join(roomName);
+        s.joinedRooms.push(roomName);
+      });
 
-    // if yes
-    // ...
-    // if not
-      // back to the chat page for create a new iframe by this room name
-      socket.emit('room_ready', { room: roomName });
-      // 
-      // ...
-      // 
+      if(!roomToCeidArray[roomName]) roomToCeidArray[roomName] = [];
+      roomToCeidArray[roomName].push(targetId);
+      roomToCeidArray[roomName].push(selfId);
+
+    }
+
+    // socket.emit('room_ready', { room: roomName });
+    io.in(roomName).emit("room_ready", { room: roomName } );
+
   });
 
   socket.on('new_message', function(data){
@@ -175,6 +205,11 @@ module.exports = function (socket, io) {
           if(scope){
             scope.joinedRooms.forEach(function(name){
               io.in(name).emit("user_left", {id: scope.ceid, username: scope.username});
+              var clist = roomToCeidArray[name];
+              if(clist){
+                clist.splice(clist.indexOf(scope.ceid), 1);
+                if(clist.length == 0) delete roomToCeidArray[name];
+              }
             });
             delete socketCache[key];
             // socketCache[key] = null;

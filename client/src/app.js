@@ -15,7 +15,7 @@ const store = configureStore();
 import ChatNavigation from './containers/ChatNavigation';
 
 import io from 'socket.io-client';
-import uuid from 'node-uuid'
+// import uuid from 'node-uuid'
 
 // var suid = Cookie.get('uuid');
 // if (!suid) {
@@ -47,19 +47,21 @@ window.socketInstance = null;
 
 function socket_init(id, domainName){
   socketInstance = io.connect('?_rtUserId=' + id + '&_rtToken=test' + '&_rtDom=' + domainName);
-  socketInstance.on('change_name', function(data){
-    // data.old_name
-    // data.new_name
+  socketInstance.on('change_username_cookie', function(data){
     var p = window.parent;
     if(p){
       var o = {
-        args: [data.old_name, data.new_name],
-        fn: (function(o, n){
+        args: [data.username],
+        fn: (function(n){
           createCookie('_ce_id', n, 365);
         }).toString()
       };
       p.postMessage(JSON.stringify(o),'*');
     }
+  });
+  
+  socketInstance.on('change_name', function(data){
+    
   });
 
   // these may be in components.
