@@ -40,9 +40,9 @@ class MessageHeader extends Component {
   componentDidMount() {
     if (Cookie.get('email_value')) {
       this.props.actions.change_email_column(true)
-      this.props.socket.emit('new_email_on_suid', {
-        email: Cookie.get('email_value')
-      });
+      // this.props.socket.emit('new_email_on_suid', {
+      //   email: Cookie.get('email_value')
+      // });
     }
   }
   componentDidUpdate() {
@@ -61,9 +61,9 @@ class MessageHeader extends Component {
       Cookie.set('email_value', ReactDOM.findDOMNode(this.refs.email).value.trim());
       this.props.actions.change_email_column(true)
       //此時綁定Email和它的userid
-      this.props.socket.emit('new_email_on_suid', {
-        email: Cookie.get('email_value')
-      });
+      // this.props.socket.emit('new_email_on_suid', {
+      //   email: Cookie.get('email_value')
+      // });
     }
   }
 
@@ -93,9 +93,9 @@ class MessageTextarea extends Component {
   componentDidMount() {
     const {actions} = this.props;
 
-    this.props.socket.on('new_message', (msg) => {
-      actions.input(msg)
-    })
+    // this.props.socket.on('new_message', (msg) => {
+    //   actions.input(msg)
+    // })
 
   }
 
@@ -155,10 +155,10 @@ class MessageInput extends Component {
   handleClick(e) {
     const {actions} = this.props
 
-    this.props.socket.emit('new_message', {
-      name: Cookie.get('email_value'),
-      text: ReactDOM.findDOMNode(this.refs.text).value.trim()
-    });
+    // this.props.socket.emit('new_message', {
+    //   name: Cookie.get('email_value'),
+    //   text: ReactDOM.findDOMNode(this.refs.text).value.trim()
+    // });
   }
 
   handleKeyPress(e) {

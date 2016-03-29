@@ -15,12 +15,7 @@ const store = configureStore();
 import ChatNavigation from './containers/ChatNavigation';
 
 import io from 'socket.io-client';
-import uuid from 'node-uuid'
 
-// var suid = Cookie.get('uuid');
-// if (!suid) {
-//   suid = Cookies.set('_', 'value', { expires: 31536000 });
-// }
 
 function getValidJSON (str) {
     try {

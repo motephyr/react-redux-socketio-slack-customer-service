@@ -44,6 +44,28 @@ export default class ChatNavigation extends Component {
       //alert('left');
       action.left_user(data);
     });
+
+    window.socketInstance.on('change_name', function(data){
+
+      action.change_name(data);
+    });
+
+    window.socketInstance.on('change_username_cookie', function(data){
+      var p = window.parent;
+      if(p){
+        var o = {
+          args: [data.username],
+          fn: (function(n){
+            createCookie('_ce_id', n, 365);
+          }).toString()
+        };
+        p.postMessage(JSON.stringify(o),'*');
+      }
+      action.change_username(data.username);
+
+    });
+
+
   }
 
   poweron() {
@@ -86,7 +108,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'UserList',
+      label: (this.props.currentUser) ? this.props.currentUser.username + '列表' : '列表',
       raised: false
     }, {
       raised: true,
@@ -99,7 +121,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'Setting',
+      label: (this.props.currentUser) ? this.props.currentUser.username + '設定' : '設定',
       raised: false
     }, {
       raised: true,
@@ -136,7 +158,7 @@ export default class ChatNavigation extends Component {
             </div>),
               'UserConversation':  (<div className={style.app}>
             <Navigation type='horizontal' actions={userActions} />
-            <UserConversationPage key='d' user_id={(this.props.currentUser) ? this.props.currentUser.id : ''} actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
+            <UserConversationPage key='d' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
             </div>),
             }[this.props.page]
           )

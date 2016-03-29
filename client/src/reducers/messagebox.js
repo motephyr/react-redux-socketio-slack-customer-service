@@ -77,6 +77,22 @@ export default function messagebox(state = initialState, action) {
           return data.id !== action.user.id
         })
       }
+    case types.CHANGE_NAME:
+      return {...state,
+        users: _.map(state.users, function(x) {
+          if (x.id === action.user.id){
+            return action.user
+          } else {
+            return x
+          }
+        })
+      }
+    case types.CHANGE_USERNAME:
+      return {...state,
+        currentUser:{...state.currentUser,
+          username: action.username
+        }
+      }
 
     default:
       return state

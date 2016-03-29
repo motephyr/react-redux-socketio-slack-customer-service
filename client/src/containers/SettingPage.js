@@ -1,7 +1,7 @@
 import {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import _ from 'lodash'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import Cookie from 'cookies-js'
 import uuid from 'node-uuid'
 import io from 'socket.io-client'
@@ -19,6 +19,16 @@ if (!suid) {
 }
 
 export default class SettingPage extends Component {
+  state = { name: '' };
+
+  handleChange(name, value) {
+    this.setState({...this.state, [name]: value});
+  };
+
+  onClick() {
+      window.socketInstance.emit('change_name',  { new_name:this.state.name} );
+      this.props.onClick();
+  }
 
   render() {
     const {is_email_column_show, messages, socket} = this.props
@@ -26,11 +36,8 @@ export default class SettingPage extends Component {
 
     return (
       <div>
-        <Input type='text' label='修改姓名' required={true} />
-        <Input
-          type='text'
-          label='修改email'
-          required={true} />
+        <Input type='text' label='修改姓名' required={true} name='name' value={this.state.name}  onChange={this.handleChange.bind(this, 'name')} />
+        <Input type='text' label='修改email'required={true} />
         <Input type='file' label='上傳圖片' required={true} />
 
         <Button
@@ -38,7 +45,7 @@ export default class SettingPage extends Component {
           label='儲存'
           raised
           accent
-          onClick={this.props.onClick} />
+          onClick={::this.onClick} />
       </div>
     )
   }

@@ -65,3 +65,24 @@ export function left_user(data) {
     user: data
   }
 }
+
+
+export const CHANGE_NAME = 'CHANGE_NAME'
+
+export function change_name(data) {
+  return {
+    type: CHANGE_NAME,
+    user: data
+  }
+}
+
+export const CHANGE_USERNAME = 'CHANGE_USERNAME'
+
+
+export function change_username(username) {
+  return {
+    type: CHANGE_USERNAME,
+    username: username
+  }
+}
+
