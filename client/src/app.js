@@ -47,20 +47,7 @@ window.socketInstance = null;
 
 function socket_init(id, domainName){
   socketInstance = io.connect('?_rtUserId=' + id + '&_rtToken=test' + '&_rtDom=' + domainName);
-  socketInstance.on('change_name', function(data){
-    // data.old_name
-    // data.new_name
-    var p = window.parent;
-    if(p){
-      var o = {
-        args: [data.old_name, data.new_name],
-        fn: (function(o, n){
-          createCookie('_ce_id', n, 365);
-        }).toString()
-      };
-      p.postMessage(JSON.stringify(o),'*');
-    }
-  });
+
 
   // these may be in components.
 
