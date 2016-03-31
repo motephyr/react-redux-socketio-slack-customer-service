@@ -153,9 +153,10 @@ module.exports = function (socket, io) {
     var targetId = data.targetUser;
     var selfId = socket.ceid;
     var roomName;
+    
     // check if duplicate room
-
     for(var room in roomToCeidArray){
+      if(room == defaultRoom) continue;
       var checkList = roomToCeidArray[room];
       if(checkList.length == 2 && checkList.indexOf(targetId) != -1 && checkList.indexOf(selfId) != -1){
         roomName = room;
@@ -164,15 +165,18 @@ module.exports = function (socket, io) {
     }
 
     if(!roomName){
+      // create a random name for the room.
       roomName = [socket.currentDomain,socket.ceid,(new Date()).getTime()].join('_');
       var targetSocketList = ceidToSocketArray[targetId] || [];
       var selfSocketList = ceidToSocketArray[selfId] || [];
 
-      (targetSocketList.cnocat(selfSocketList)).forEach(function(s){
+      // join the sockets for two users.
+      (targetSocketList.concat(selfSocketList)).forEach(function(s){
         s.join(roomName);
         s.joinedRooms.push(roomName);
       });
 
+      // mapping a room to participate users.
       if(!roomToCeidArray[roomName]) roomToCeidArray[roomName] = [];
       roomToCeidArray[roomName].push(targetId);
       roomToCeidArray[roomName].push(selfId);
