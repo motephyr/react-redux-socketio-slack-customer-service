@@ -93,6 +93,10 @@ export default function messagebox(state = initialState, action) {
           username: action.username
         }
       }
+    case types.CHANGE_CURRENT_ROOM:
+      return {...state,
+        room: action.room
+      }
 
     default:
       return state

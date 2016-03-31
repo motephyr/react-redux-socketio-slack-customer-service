@@ -43,8 +43,10 @@ class MessageTextarea extends Component {
 
   }
 
-  handleClickPeople(people){
-    this.props.actions.change('UserConversation',people);
+  handleClickUser(user){
+    window.socketInstance.emit('create_room', { targetUsers:[user.id] });
+
+    this.props.actions.change('UserConversation',user.username);
   }
 
   componentDidUpdate() {
@@ -58,12 +60,13 @@ class MessageTextarea extends Component {
       <div>
         <List ripple>
     <ListDivider />
-    {_.map(users,(user) => {return (
-<ListItem key={user.id}
+    {_.map(users,(user) => {
+      console.log(user)
+      return (<ListItem key={user.id}
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
       caption={user.username}
       leftIcon='empty'
-      onClick={this.handleClickPeople.bind(this, 'DrAAMan')} />
+      onClick={this.handleClickUser.bind(this, user)} />
       )})}
 {/*    <ListItem
       avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'

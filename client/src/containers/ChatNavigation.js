@@ -21,7 +21,8 @@ import Navigation from 'react-toolbox/lib/navigation';
   page: state.messagebox.ui.page,
   currentUser: state.messagebox.currentUser,
   messages: state.messagebox.messages,
-  users: state.messagebox.users
+  users: state.messagebox.users,
+  room: state.messagebox.room
 }), dispatch => ({
   messageBoxActions: bindActionCreators(MessageBoxActions, dispatch)
 }))
@@ -64,6 +65,11 @@ export default class ChatNavigation extends Component {
       action.change_username(data.username);
 
     });
+
+    window.socketInstance.on('room_ready', function(data){
+      action.change_current_room(data.room);
+    });
+
 
 
   }
@@ -134,7 +140,7 @@ export default class ChatNavigation extends Component {
       icon: 'power',
       onClick: this.poweroff.bind(this)
     }, {
-      label: 'UserConversation',
+      label: (this.props.room) ? this.props.room : 'UserConversation',
       raised: false
     }, {
       raised: true,

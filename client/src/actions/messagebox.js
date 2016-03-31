@@ -86,3 +86,12 @@ export function change_username(username) {
   }
 }
 
+export const CHANGE_CURRENT_ROOM = 'CHANGE_CURRENT_ROOM'
+
+export function change_current_room(room) {
+  return {
+    type: CHANGE_CURRENT_ROOM,
+    room: room
+  }
+}
+
