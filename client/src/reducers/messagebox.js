@@ -7,22 +7,7 @@ const initialState = {
     is_panel_show: false,
     is_email_column_show: false
   },
-  messages: [{
-    id: 0,
-    name: '@customerService',
-    text: "hello,may i help you?",
-    time: new Date().toString()
-  }, {
-    id: 1,
-    name: '@customerService',
-    text: "hello,may i help you?",
-    time: new Date().toString()
-  }, {
-    id: 2,
-    name: 'customerService',
-    text: "hello,may i help you?ajsoidfjaosidjfpoaisjdpfoiajsdpoijgqeproijgqoepirjgpoi/noajsdfoiasjdofi",
-    time: new Date().toString()
-  }]
+  messages: []
 }
 
 export default function messagebox(state = initialState, action) {

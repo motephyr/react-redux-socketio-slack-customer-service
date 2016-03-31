@@ -46,17 +46,8 @@ function socket_init(id, domainName){
 
   // these may be in components.
 
-  socketInstance.on('new_message', function(data){
-    // maybe
-    alert('Message to: ' + data.room + " content:" + data.message);
-  });
 
-  socketInstance.on('room_ready', function(data){
-    console.log('created room: ' + data.room);
 
-    // Here should send a message back to main page for knowing the user states,
-    // like add iframe, highlight the box, pop up chat window, and so on....
-  });
 
   ReactDOM.render(
     <App />,

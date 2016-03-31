@@ -71,6 +71,15 @@ export default class ChatNavigation extends Component {
     });
 
 
+  window.socketInstance.on('new_message', function(data){
+    // maybe
+    action.input({
+      name: "",
+      text: data.message,
+      time: new Date().toString()
+    })
+  });
+
 
   }
 
@@ -164,7 +173,7 @@ export default class ChatNavigation extends Component {
             </div>),
               'UserConversation':  (<div className={style.app}>
             <Navigation type='horizontal' actions={userActions} />
-            <UserConversationPage key='d' actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
+            <UserConversationPage key='d' room={this.props.room} actions={this.props.messageBoxActions} messages={this.props.messages} is_email_column_show={this.props.is_email_column_show} />
             </div>),
             }[this.props.page]
           )

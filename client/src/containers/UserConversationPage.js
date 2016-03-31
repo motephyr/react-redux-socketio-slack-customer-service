@@ -21,8 +21,8 @@ export default class UserConversationPage extends Component {
     const {actions,is_email_column_show,messages,socket} = this.props
     return (
       <div>
-        <MessageTextarea actions={actions} messages={messages}/>
-        <MessageInput actions={actions} />
+        <MessageTextarea actions={actions} messages={messages} />
+        <MessageInput actions={actions} room={this.props.room}  />
       </div>
     )
   }
@@ -40,9 +40,6 @@ class MessageHeader extends Component {
   componentDidMount() {
     if (Cookie.get('email_value')) {
       this.props.actions.change_email_column(true)
-      // this.props.socket.emit('new_email_on_suid', {
-      //   email: Cookie.get('email_value')
-      // });
     }
   }
   componentDidUpdate() {
@@ -60,10 +57,6 @@ class MessageHeader extends Component {
     if (e.key === 'Enter') {
       Cookie.set('email_value', ReactDOM.findDOMNode(this.refs.email).value.trim());
       this.props.actions.change_email_column(true)
-      //此時綁定Email和它的userid
-      // this.props.socket.emit('new_email_on_suid', {
-      //   email: Cookie.get('email_value')
-      // });
     }
   }
 
@@ -90,15 +83,6 @@ class MessageHeader extends Component {
 
 class MessageTextarea extends Component {
 
-  componentDidMount() {
-    const {actions} = this.props;
-
-    // this.props.socket.on('new_message', (msg) => {
-    //   actions.input(msg)
-    // })
-
-  }
-
   componentDidUpdate() {
     var node = ReactDOM.findDOMNode(this);
     node.scrollTop = node.scrollHeight;
@@ -107,7 +91,8 @@ class MessageTextarea extends Component {
   render() {
     const {messages} = this.props
     var textareaValue = _.map(messages, (x) => `${x.name}:\n         ${x.text} \n`).join(' ')
-    var messageNodes = messages.map(function (message) {
+    var messageNodes = messages.map(function (message, index) {
+      console.log(message.name)
       if (message.name[0] == '@') {
         var leftOrRight = (<div className={style.message_left}>
             <div className={style.message_block}>
@@ -128,7 +113,7 @@ class MessageTextarea extends Component {
           </div>);
       }
       return (
-        <div className={style.message} key={message.id}>
+        <div className={style.message} key={index}>
           {leftOrRight}
         </div>
       )
@@ -150,7 +135,11 @@ class MessageTextarea extends Component {
 
 
 class MessageInput extends Component {
+  state = { text: '' };
 
+  handleChange(name, value) {
+    this.setState({...this.state, [name]: value});
+  };
 
   handleClick(e) {
     const {actions} = this.props
@@ -159,6 +148,14 @@ class MessageInput extends Component {
     //   name: Cookie.get('email_value'),
     //   text: ReactDOM.findDOMNode(this.refs.text).value.trim()
     // });
+
+    window.socketInstance.emit('new_message', { message: this.state.text, room: this.props.room  });
+
+    actions.input({
+      name: "@",
+      text: this.state.text,
+      time: new Date().toString()
+    })
   }
 
   handleKeyPress(e) {
@@ -171,7 +168,7 @@ class MessageInput extends Component {
     const {actions} = this.props
     return (
       <div className={style.inputArea}>
-        <Input className={style.text} type="text" ref="text" onKeyPress={::this.handleKeyPress}  />
+        <Input className={style.text} type="text" onChange={this.handleChange.bind(this, 'text')} onKeyPress={::this.handleKeyPress}  />
         <Button className={style.button} icon="send" onClick={::this.handleClick} accent floating  />
       </div>
     )
