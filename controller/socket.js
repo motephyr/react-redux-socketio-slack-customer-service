@@ -171,18 +171,21 @@ module.exports = function (socket, io) {
       var selfSocketList = ceidToSocketArray[selfId] || [];
 
       // join the sockets for two users.
-      (targetSocketList.concat(selfSocketList)).forEach(function(s){
-        s.join(roomName);
-        s.joinedRooms.push(roomName);
-      });
+      if(targetSocketList.length != 0 && selfSocketList.length != 0){
+        (targetSocketList.concat(selfSocketList)).forEach(function(s){
+          s.join(roomName);
+          s.joinedRooms.push(roomName);
+        });
 
-      // mapping a room to participate users.
-      if(!roomToCeidArray[roomName]) roomToCeidArray[roomName] = [];
-      roomToCeidArray[roomName].push(targetId);
-      roomToCeidArray[roomName].push(selfId);
-
+        // mapping a room to participate users.
+        if(!roomToCeidArray[roomName]) roomToCeidArray[roomName] = [];
+        roomToCeidArray[roomName].push(targetId);
+        roomToCeidArray[roomName].push(selfId);
+      }
+      
     }
-
+    
+    console.log(roomToCeidArray);
     // socket.emit('room_ready', { room: roomName });
     io.in(roomName).emit("room_ready", { room: roomName } );
 
@@ -212,7 +215,7 @@ module.exports = function (socket, io) {
               var clist = roomToCeidArray[name];
               if(clist){
                 clist.splice(clist.indexOf(scope.ceid), 1);
-                if(clist.length == 0) delete roomToCeidArray[name];
+                if(clist.length == 0 || (name != defaultRoom && clist.length <= 1)) delete roomToCeidArray[name];
               }
             });
             delete socketCache[key];
