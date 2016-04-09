@@ -1,3 +1,37 @@
+window._ceWin = null;
+window._collectStamp = (new Date()).getTime();
+window._collectEvents = ['mousemove', 'scroll', 'click'];
+window._ceCollectAction = function(eventArg){
+    if(eventArg._ceHasRecord !== true){
+        // to do send event name
+        console.log("event:[" + eventArg.type + "] scope:" + this.toString());
+        eventArg._ceHasRecord = true;
+    }
+};
+
+(function() {
+    // events of window and document should doing something other.
+    Element.prototype._addEventListener = Element.prototype.addEventListener;
+    Element.prototype.addEventListener = function(name,eventFn,capture) {
+        var combinedFn = eventFn;
+        if(_collectEvents.indexOf(name) != -1){
+            combinedFn = function(){
+                eventFn.apply(this, arguments);
+                var eventArg = null,
+                    i = 0, len = arguments.length;
+                for(; i < len; i++){
+                    if(arguments[i].toString().substr(-6) == 'Event]'){
+                        eventArg = arguments[i];
+                        break;
+                    }
+                }
+                if(eventArg) window._ceCollectAction.call(this, eventArg);
+            };
+        }
+        this._addEventListener(name, combinedFn, capture);
+    };
+})();
+
 function _changeIframeSize(w, h){
     _messageIframe.width = w;
     _messageIframe.height = h;
@@ -20,7 +54,7 @@ function createCookie(name,value,days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-function getValidJSON (str) {
+function getValidJSON(str) {
     try {
         var o = JSON.parse(str);
         return o;
@@ -29,7 +63,7 @@ function getValidJSON (str) {
     }
 }
 
-var _getMaxZindex = function(dom){
+function _getMaxZindex(dom){
     dom = dom || document.body;
     var maxZindex = -1;
     var items = dom.querySelectorAll('*');
@@ -43,9 +77,47 @@ var _getMaxZindex = function(dom){
         }
     }
     return maxZindex;
-};
+}
 
-window._ceWin = null;
+function _hookWindowEvents(){
+    ['focus','blur'].forEach(function(name){
+        window.addEventListener(name, _ceCollectAction);
+    });
+}
+
+function _hookDocumentEvents(){
+    // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+    // Set the name of the hidden property and the change event for visibility
+    var _visibilityChange, _visibilityState; 
+    if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+      _visibilityChange = "visibilitychange";
+      _visibilityState = "visibilityState";
+    } else if (typeof document.mozHidden !== "undefined") {
+      _visibilityChange = "mozvisibilitychange";
+      _visibilityState = "mozVisibilityState";
+    } else if (typeof document.msHidden !== "undefined") {
+      _visibilityChange = "msvisibilitychange";
+      _visibilityState = "msVisibilityState";
+    } else if (typeof document.webkitHidden !== "undefined") {
+      _visibilityChange = "webkitvisibilitychange";
+      _visibilityState = "webkitVisibilityState";
+    }
+
+    _collectEvents.concat([_visibilityChange]).forEach(function(name){
+        document.addEventListener(name, _ceCollectAction);
+    });
+}
+
+function _hookElementsEvent(elList){
+    var i = 0, len = elList.length;
+    for(; i < len; i++){
+        var el = elList[i];
+        // scroll
+        if(el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth){
+            el.addEventListener('scroll', function(){});
+        }
+    }
+}
 
 window.addEventListener("load", function _onload(event){
     window.removeEventListener("load", _onload, false);
@@ -75,27 +147,10 @@ window.addEventListener("load", function _onload(event){
     dom.addEventListener('load', function(){ window._ceWin = dom.contentWindow; });
     dom.src = window._debugUrl || "http://52.68.126.89/client/index.html";
     document.body.appendChild(dom);
+    
+    _hookWindowEvents();
+    _hookDocumentEvents();
+    _hookElementsEvent(document.querySelectorAll('*'));
+
 },false);
 
-// for test
-// $(window).focus(function() { console.log("focus"); });
-// $(window).blur(function() { console.log("blur"); });
-// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
-// Set the name of the hidden property and the change event for visibility
-// var _visibilityChange, _visibilityState;
-// if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
-//   _visibilityChange = "visibilitychange";
-//   _visibilityState = "visibilityState";
-// } else if (typeof document.mozHidden !== "undefined") {
-//   _visibilityChange = "mozvisibilitychange";
-//   _visibilityState = "mozVisibilityState";
-// } else if (typeof document.msHidden !== "undefined") {
-//   _visibilityChange = "msvisibilitychange";
-//   _visibilityState = "msVisibilityState";
-// } else if (typeof document.webkitHidden !== "undefined") {
-//   _visibilityChange = "webkitvisibilitychange";
-//   _visibilityState = "webkitVisibilityState";
-// }
-// document.addEventListener(_visibilityChange, function(e){
-//     console.log(document[_visibilityState]);
-// }, false);
