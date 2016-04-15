@@ -81,6 +81,8 @@ window.addEventListener('load', function(e){
   }
 });
 
+window._collectActions = [];
+window._collectInterval = null;
 // Define event handlers between main page and chatting iframe(s).
 window.addEventListener('message', function(e){
   // e.data
@@ -94,12 +96,59 @@ window.addEventListener('message', function(e){
       // alert(JSON.stringify(o));
       eval("(" + o.fn + ").call(this);");
     }
+    if(o.event == 'update_user_action'){
+      // TEST OK
+      window._collectActions.push(JSON.parse(o.actionInfo));
+      // if(window._collectActions.length > 200){
+      //   window._collectActions.shift();
+      // }
+      // alert(o.actionInfo);
+    }
   }
-  //alert(e.data);™
-  //var o = JSON.parse(e.data);
-
 });
 
+window.enableCollectAction = function(millisecond){
+  var p = window.parent;
+  if(p){
+    if(window._ceCollectEnabled !== true){
+      var o = {
+        fn: (function(){
+          window._ceEnableCollect = true;
+        }).toString()
+      };
+      p.postMessage(JSON.stringify(o),'*');
+      window._ceCollectEnabled = true;
+    }
+    // millisecond
+    if(window._collectInterval) clearInterval(window._collectInterval);
+    window._collectInterval = setInterval(function(){
+      if(socketInstance && window._collectActions.length){
+        socketInstance.emit("update_user_action", window._collectActions);
+        window._collectActions = [];
+      }
+    }, Math.max(millisecond || 100, 100) );
+  }
+};
+
+window.disableCollectAction = function(){
+  var p = window.parent;
+  if(p){
+    if(window._ceCollectEnabled === true){
+      var o = {
+        fn: (function(){
+          window._ceEnableCollect = false;
+        }).toString()
+      };
+      p.postMessage(JSON.stringify(o),'*');
+      window._ceCollectEnabled = false;
+    }
+    if(window._collectInterval){
+      clearInterval(window._collectInterval);
+      window._collectInterval = null;
+      window._collectActions = [];
+    }
+  }
+};
 
 
 

@@ -1,11 +1,47 @@
 window._ceWin = null;
-window._collectStamp = (new Date()).getTime();
+
+window._ceEnableCollect = false;
+
+window._ceCount = 0;
+window._collectStamp = {};
+window._ceRecordInterval = 100;
 window._collectEvents = ['mousemove', 'scroll', 'click'];
+window._windowEvents = ['focus','blur'];
 window._ceCollectAction = function(eventArg){
-    if(eventArg._ceHasRecord !== true){
+    // Avoid bubble event triggers.
+
+    if(window._ceWin && window._ceEnableCollect && eventArg._ceHasTriggered !== true){
         // to do send event name
-        console.log("event:[" + eventArg.type + "] scope:" + this.toString());
-        eventArg._ceHasRecord = true;
+        // console.log(eventArg);
+        var stamps = window._collectStamp;
+        var curTime = (new Date()).getTime();
+        var isBubble = eventArg.bubbles;
+        var storeTime = stamps[eventArg.type] || eventArg.target._lastScrollStamp || 0;
+        if( curTime - storeTime >= window._ceRecordInterval){
+            var target = eventArg.target;
+            // var type = (_visibilityChange == eventArg.type)
+            var actionObj = {
+                target_id: target._ceSerial,
+                event: eventArg.type,
+                stamp: curTime,
+                scrollTop: target.scrollTop,
+                scrollLeft: target.scrollLeft,
+                x: eventArg.x,
+                y: eventArg.y
+            };
+            if(actionObj.event == _visibilityChange) actionObj.status = document[_visibilityState];
+            var o = {
+                event: 'update_user_action',
+                actionInfo: JSON.stringify(actionObj)
+            };
+            window._ceWin.postMessage(JSON.stringify(o), "*");
+
+            if(isBubble) stamps[eventArg.type] = curTime;
+            else target._lastScrollStamp = curTime;
+            // console.log("event:[" + eventArg.type + "] Record!");
+        }
+
+        eventArg._ceHasTriggered = true;
     }
 };
 
@@ -30,6 +66,7 @@ window._ceCollectAction = function(eventArg){
         }
         this._addEventListener(name, combinedFn, capture);
     };
+    
 })();
 
 function _changeIframeSize(w, h){
@@ -80,7 +117,7 @@ function _getMaxZindex(dom){
 }
 
 function _hookWindowEvents(){
-    ['focus','blur'].forEach(function(name){
+    window._windowEvents.forEach(function(name){
         window.addEventListener(name, _ceCollectAction);
     });
 }
@@ -88,7 +125,8 @@ function _hookWindowEvents(){
 function _hookDocumentEvents(){
     // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
     // Set the name of the hidden property and the change event for visibility
-    var _visibilityChange, _visibilityState; 
+    window._visibilityChange = "";
+    window._visibilityState = "";
     if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
       _visibilityChange = "visibilitychange";
       _visibilityState = "visibilityState";
@@ -112,10 +150,12 @@ function _hookElementsEvent(elList){
     var i = 0, len = elList.length;
     for(; i < len; i++){
         var el = elList[i];
+        el._ceSerial = ++_ceCount;
         // scroll
         if(el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth){
             el.addEventListener('scroll', function(){});
         }
+
     }
 }
 
@@ -133,7 +173,7 @@ window.addEventListener("load", function _onload(event){
             var fn = chatInfo.fn;
             if(fn){
                 eval("var _tmpFn = " + fn);
-                _tmpFn.apply(chatInfo.scope || this, chatInfo.args);
+                _tmpFn.apply(chatInfo.scope || this, chatInfo.args || []);
                 window._tmpFn = null;
             }
         }
