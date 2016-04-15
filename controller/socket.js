@@ -196,6 +196,12 @@ module.exports = function (socket, io) {
     // io.in(data.room).emit('new_message', data.message);
   });
 
+  socket.on('update_user_action', function(data){
+    console.log("update_user_action");
+    console.log("[ceid:" + socket.ceid + ",socketid:" + socket.id + "]");
+    console.log(data);
+  });
+
   socket.on('disconnect', function (message) {
     // console.log(socket.currentDomain);
     // console.log(socket.rooms);
